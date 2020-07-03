@@ -3,8 +3,10 @@ package dev.iwilltry42.timestrap
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import com.android.volley.Request
 import com.android.volley.Response
@@ -19,32 +21,44 @@ class MainActivity : AppCompatActivity() {
 
         val mainButton = findViewById<Button>(R.id.main_button)
         mainButton.setOnClickListener {
-            requestTimestrap(this, findViewById(R.id.main_text))
+            requestTimestrap(this)
         }
 
     }
-}
 
-fun requestTimestrap(context: Context, textField: TextView) {
-    val url = "https://your.timestrap.com/api/entries/"
-    val queue = Volley.newRequestQueue(context)
+    private fun requestTimestrap(context: Context) {
 
-    val jsonObjectRequest = object: JsonObjectRequest(
-        Request.Method.GET, url, null,
-        Response.Listener { response ->
-            println("Count: " + response.get("count"))
-            textField.text = "Count of tasks: " + response.get("count").toString()
-        },
-        Response.ErrorListener { error ->
-            Log.e("Request", error.toString())
+        val address = findViewById<EditText>(R.id.address).text
+        val username = findViewById<EditText>(R.id.username).text
+        val password = findViewById<EditText>(R.id.password).text
+        val auth = Base64.encodeToString("$username:$password".toByteArray(), Base64.NO_WRAP)
+
+        val textField = findViewById<TextView>(R.id.main_text)
+        textField.text = username.toString()
+
+        val url = "$address/api/entries/"
+        Log.i("Address", address.toString())
+        val queue = Volley.newRequestQueue(context)
+
+        val jsonObjectRequest = object: JsonObjectRequest(
+            Request.Method.GET, url, null,
+            Response.Listener { response ->
+                println("Count: " + response.get("count"))
+                textField.text = "Count of tasks: " + response.get("count").toString()
+            },
+            Response.ErrorListener { error ->
+                Log.e("Request", error.toString())
+            }
+        ) {
+            override fun getHeaders(): MutableMap<String, String> {
+                var headers :HashMap<String, String> = HashMap<String, String> ()
+                headers["authorization"] = "Basic $auth"
+                return headers
+            }
         }
-    ) {
-        override fun getHeaders(): MutableMap<String, String> {
-            var headers :HashMap<String, String> = HashMap<String, String> ()
-            headers["authorization"] = "Basic auth-hash"
-            return headers
-        }
+        queue.add(jsonObjectRequest)
+
     }
-    queue.add(jsonObjectRequest)
 
 }
+
