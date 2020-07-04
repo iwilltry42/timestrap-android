@@ -1,6 +1,5 @@
 package dev.iwilltry42.timestrap
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -8,13 +7,10 @@ import android.text.TextWatcher
 import android.util.Base64
 import android.util.Log
 import android.widget.*
-import androidx.core.view.isVisible
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.google.gson.Gson
-import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
 
 
