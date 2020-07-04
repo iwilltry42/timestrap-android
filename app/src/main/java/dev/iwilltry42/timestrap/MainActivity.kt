@@ -18,10 +18,17 @@ class MainActivity : AppCompatActivity() {
 
     private var apiToken: String? = null
     private var address: String? = null
+    private var username: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppPreferences.init(this)
         setContentView(R.layout.activity_main)
+
+        if (AppPreferences.isLoggedIn) {
+            findViewById<EditText>(R.id.username).setText(AppPreferences.username)
+            findViewById<EditText>(R.id.address).setText(AppPreferences.address)
+        }
 
         // Sign In Button
         val mainButton = findViewById<Button>(R.id.signin_button)
@@ -29,10 +36,10 @@ class MainActivity : AppCompatActivity() {
         mainButton.setOnClickListener {
             progressBar.visibility = ProgressBar.VISIBLE
             this.address = findViewById<EditText>(R.id.address)?.text.toString()
-
+            this.username = findViewById<EditText>(R.id.username)?.text.toString()
             fetchAPITokenAndProceed(
                 this.address!!,
-                findViewById<EditText>(R.id.username)?.text.toString(),
+                this.username!!,
                 findViewById<EditText>(R.id.password)?.text.toString()
             )
         }
@@ -67,14 +74,19 @@ class MainActivity : AppCompatActivity() {
     private fun setAPITokenAndProceed(success: Boolean, response: JSONObject?) {
         if (success) {
             Log.e("API", "Fetched token ${response?.get("token")?.toString()}")
-            this.apiToken = response?.get("token")?.toString()
+            apiToken = response?.get("token")?.toString()
             Toast.makeText(this, "Fetched API Token '${this.apiToken}'", Toast.LENGTH_SHORT).show()
+            AppPreferences.token = apiToken!!
+            AppPreferences.address = this.address!!
+            AppPreferences.username = this.username!!
+            AppPreferences.isLoggedIn = true
         } else {
             Toast.makeText(this, "Failed to fetch API Token: Please verify your Account Details", Toast.LENGTH_SHORT).show()
             Log.e("API", "Failed to fetch API Token")
+            AppPreferences.isLoggedIn = false
         }
         findViewById<ProgressBar>(R.id.signin_progress).visibility = ProgressBar.INVISIBLE
-        requestAPIWithTokenAuth(this.address!!, "/api/entries/", this.apiToken!!)
+        requestAPIWithTokenAuth(this.address!!, "/api/entries/", AppPreferences.token)
     }
 
     private fun requestAPIWithTokenAuth(address: String, path: String, token: String) {
