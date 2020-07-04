@@ -3,61 +3,125 @@ package dev.iwilltry42.timestrap
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Base64
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
+import androidx.core.view.isVisible
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
 
+
 class MainActivity : AppCompatActivity() {
+
+    private var apiToken: String? = null
+    private var address: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val mainButton = findViewById<Button>(R.id.main_button)
+        // Sign In Button
+        val mainButton = findViewById<Button>(R.id.signin_button)
+        val progressBar = findViewById<ProgressBar>(R.id.signin_progress)
         mainButton.setOnClickListener {
-            requestTimestrap(this)
+            progressBar.visibility = ProgressBar.VISIBLE
+            this.address = findViewById<EditText>(R.id.address)?.text.toString()
+
+            fetchAPITokenAndProceed(
+                this.address!!,
+                findViewById<EditText>(R.id.username)?.text.toString(),
+                findViewById<EditText>(R.id.password)?.text.toString()
+            )
         }
+
+        // activate Sign In Button only when all fields are filled
+        val fieldsFilledWatcher = object: TextWatcher {
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                mainButton.isEnabled = (findViewById<EditText>(R.id.address)?.text?.length!! > 0
+                        && findViewById<EditText>(R.id.username)?.text?.length!! > 0
+                        && findViewById<EditText>(R.id.password)?.text?.length!! > 0)
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {}
+        }
+
+        findViewById<EditText>(R.id.address).addTextChangedListener(fieldsFilledWatcher)
+        findViewById<EditText>(R.id.username).addTextChangedListener(fieldsFilledWatcher)
+        findViewById<EditText>(R.id.password).addTextChangedListener(fieldsFilledWatcher)
 
     }
 
-    private fun requestTimestrap(context: Context) {
-
-        val address = findViewById<EditText>(R.id.address).text
-        val username = findViewById<EditText>(R.id.username).text
-        val password = findViewById<EditText>(R.id.password).text
+    private fun fetchAPITokenAndProceed(address: String, username: String, password: String) {
         val auth = Base64.encodeToString("$username:$password".toByteArray(), Base64.NO_WRAP)
+        val bodyString = HashMap<String, String>()
+        bodyString["username"] = username
+        bodyString["password"] = password
+        requestAPI(Request.Method.POST, address, "/api/auth_token/", null, JSONObject(bodyString as Map<*, *>).toString().toByteArray(), this::setAPITokenAndProceed)
+    }
+
+    private fun setAPITokenAndProceed(success: Boolean, response: JSONObject?) {
+        if (success) {
+            Log.e("API", "Fetched token ${response?.get("token")?.toString()}")
+            this.apiToken = response?.get("token")?.toString()
+            Toast.makeText(this, "Fetched API Token '${this.apiToken}'", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Failed to fetch API Token: Please verify your Account Details", Toast.LENGTH_SHORT).show()
+            Log.e("API", "Failed to fetch API Token")
+        }
+        findViewById<ProgressBar>(R.id.signin_progress).visibility = ProgressBar.INVISIBLE
+        requestAPIWithTokenAuth(this.address!!, "/api/entries/", this.apiToken!!)
+    }
+
+    private fun requestAPIWithTokenAuth(address: String, path: String, token: String) {
+        val headers = HashMap<String, String>()
+        headers["Authorization"] = "Token $token"
+        requestAPI(Request.Method.GET, address, path, headers, null) { success, response ->
+            if(success) {
+                findViewById<TextView>(R.id.response_text).text =
+                    getString(R.string.response_field, response?.get("count"))
+            }
+        }
+    }
+
+    private fun requestAPI(method: Int, address: String, path: String, headers: HashMap<String, String>?, body: ByteArray?, callback: (success: Boolean, response: JSONObject?) -> Unit) {
+
+
 
         val textField = findViewById<TextView>(R.id.main_text)
-        textField.text = username.toString()
 
-        val url = "$address/api/entries/"
-        Log.i("Address", address.toString())
-        val queue = Volley.newRequestQueue(context)
+        val url = "$address$path"
+        Log.i("Address", address)
+        val queue = Volley.newRequestQueue(this)
 
         val jsonObjectRequest = object: JsonObjectRequest(
-            Request.Method.GET, url, null,
+            method, url, null,
             Response.Listener { response ->
-                println("Count: " + response.get("count"))
-                textField.text = "Count of tasks: " + response.get("count").toString()
+                callback(true, response)
             },
             Response.ErrorListener { error ->
                 Log.e("Request", error.toString())
+                error.printStackTrace()
+                callback(false, null)
             }
         ) {
             override fun getHeaders(): MutableMap<String, String> {
-                var headers :HashMap<String, String> = HashMap<String, String> ()
-                headers["authorization"] = "Basic $auth"
-                return headers
+                return headers ?: super.getHeaders()
+            }
+
+            override fun getBody(): ByteArray {
+                return body ?: super.getBody()
             }
         }
         queue.add(jsonObjectRequest)
-
     }
 
 }
