@@ -28,14 +28,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         main_button.setOnClickListener {
-            requestAPIWithTokenAuth(this, AppPreferences.address, "/api/entries/", AppPreferences.token) {success, response ->
-                val responseText = findViewById<TextView>(R.id.response_text)
-                if (success) {
-                    responseText.text = response.toString()
-                } else {
-                    responseText.text = "Request Failed"
-                }
-            }
+            getEntries()
         }
     }
 
