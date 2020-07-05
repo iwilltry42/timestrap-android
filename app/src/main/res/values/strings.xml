@@ -1,14 +1,15 @@
 <resources>
     <string name="app_name">Timestrap</string>
-    <string name="main_text">Login</string>
-    <string name="main_button_text">Do Something!</string>
-    <string name="main_text_counter">Counter %d</string>
-    <string name="main_button_reset">Reset</string>
 
-    <!-- Strings related to login -->
-    <string name="prompt_address">https://…</string>
-    <string name="prompt_username">Username</string>
-    <string name="prompt_password">Password</string>
+    <!-- Main Activity -->
+    <string name="main_text">Hello there %s</string>
+    <string name="main_button">Refresh</string>
+
+    <!-- Login Activity -->
+    <string name="login_title">Login</string>
+    <string name="login_prompt_address">https://…</string>
+    <string name="login_prompt_username">Username</string>
+    <string name="login_prompt_password">Password</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome %s!"</string>

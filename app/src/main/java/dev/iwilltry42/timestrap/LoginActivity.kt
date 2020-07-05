@@ -1,6 +1,6 @@
 package dev.iwilltry42.timestrap
 
-import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -9,10 +9,7 @@ import android.util.Base64
 import android.util.Log
 import android.widget.*
 import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.Volley
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
 
 
@@ -25,7 +22,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppPreferences.init(this)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_login)
 
         // If the user logged in before, auto-fill username and address from AppPreferences
         if (AppPreferences.isLoggedIn) {
@@ -33,17 +30,19 @@ class LoginActivity : AppCompatActivity() {
             findViewById<EditText>(R.id.address).setText(AppPreferences.address)
             requestAPIWithTokenAuth(this, AppPreferences.address, "/api/entries", AppPreferences.token) {success, response ->
                 if (success) {
-                    main_text.text = "Hey there ${AppPreferences.username}"
+                    login_title.text = "Hey there ${AppPreferences.username}"
                 } else {
-                    main_text.text = "Failed Login, Try Again!"
+                    login_title.text = "Failed Login, Try Again!"
                 }
             }
+            val intent = Intent(this, MainActivity::class.java).apply {}
+            startActivity(intent)
         }
 
         // Sign In Button
-        val mainButton = findViewById<Button>(R.id.signin_button)
+        val loginButton = findViewById<Button>(R.id.login_button)
         val progressBar = findViewById<ProgressBar>(R.id.signin_progress)
-        mainButton.setOnClickListener {
+        loginButton.setOnClickListener {
             progressBar.visibility = ProgressBar.VISIBLE
             this.address = findViewById<EditText>(R.id.address)?.text.toString()
             this.username = findViewById<EditText>(R.id.username)?.text.toString()
@@ -57,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
         // activate Sign In Button only when all fields are filled
         val fieldsFilledWatcher = object: TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                mainButton.isEnabled = (findViewById<EditText>(R.id.address)?.text?.length!! > 0
+                loginButton.isEnabled = (findViewById<EditText>(R.id.address)?.text?.length!! > 0
                         && findViewById<EditText>(R.id.username)?.text?.length!! > 0
                         && findViewById<EditText>(R.id.password)?.text?.length!! > 0)
             }
@@ -97,14 +96,8 @@ class LoginActivity : AppCompatActivity() {
             AppPreferences.isLoggedIn = false
         }
         findViewById<ProgressBar>(R.id.signin_progress).visibility = ProgressBar.INVISIBLE
-        requestAPIWithTokenAuth(this, this.address!!, "/api/entries/", AppPreferences.token) {success, response ->
-            val responseText = findViewById<TextView>(R.id.response_text)
-            if (success) {
-                responseText.text = response.toString()
-            } else {
-                responseText.text = "Request Failed"
-            }
-        }
+        val intent = Intent(this, MainActivity::class.java).apply {}
+        startActivity(intent)
     }
 }
 
