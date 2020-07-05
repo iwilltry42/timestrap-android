@@ -11,6 +11,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
 
 
@@ -25,9 +26,17 @@ class MainActivity : AppCompatActivity() {
         AppPreferences.init(this)
         setContentView(R.layout.activity_main)
 
+        // If the user logged in before, auto-fill username and address from AppPreferences
         if (AppPreferences.isLoggedIn) {
             findViewById<EditText>(R.id.username).setText(AppPreferences.username)
             findViewById<EditText>(R.id.address).setText(AppPreferences.address)
+            requestAPIWithTokenAuth(AppPreferences.address, "/api/entries", AppPreferences.token) {success, response ->
+                if (success) {
+                    main_text.text = "Welcome Back ${AppPreferences.username}"
+                } else {
+                    main_text.text = "Failed Login, Try Again!"
+                }
+            }
         }
 
         // Sign In Button
@@ -56,7 +65,6 @@ class MainActivity : AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable?) {}
         }
-
         findViewById<EditText>(R.id.address).addTextChangedListener(fieldsFilledWatcher)
         findViewById<EditText>(R.id.username).addTextChangedListener(fieldsFilledWatcher)
         findViewById<EditText>(R.id.password).addTextChangedListener(fieldsFilledWatcher)
@@ -76,6 +84,8 @@ class MainActivity : AppCompatActivity() {
             Log.e("API", "Fetched token ${response?.get("token")?.toString()}")
             apiToken = response?.get("token")?.toString()
             Toast.makeText(this, "Fetched API Token '${this.apiToken}'", Toast.LENGTH_SHORT).show()
+
+            // Login succeeded: store details in AppPreferences
             AppPreferences.token = apiToken!!
             AppPreferences.address = this.address!!
             AppPreferences.username = this.username!!
@@ -86,25 +96,23 @@ class MainActivity : AppCompatActivity() {
             AppPreferences.isLoggedIn = false
         }
         findViewById<ProgressBar>(R.id.signin_progress).visibility = ProgressBar.INVISIBLE
-        requestAPIWithTokenAuth(this.address!!, "/api/entries/", AppPreferences.token)
-    }
-
-    private fun requestAPIWithTokenAuth(address: String, path: String, token: String) {
-        val headers = HashMap<String, String>()
-        headers["Authorization"] = "Token $token"
-        requestAPI(Request.Method.GET, address, path, headers, null) { success, response ->
-            if(success) {
-                findViewById<TextView>(R.id.response_text).text =
-                    getString(R.string.response_field, response?.get("count"))
+        requestAPIWithTokenAuth(this.address!!, "/api/entries/", AppPreferences.token) {success, response ->
+            val responseText = findViewById<TextView>(R.id.response_text)
+            if (success) {
+                responseText.text = response.toString()
+            } else {
+                responseText.text = "Request Failed"
             }
         }
     }
 
+    private fun requestAPIWithTokenAuth(address: String, path: String, token: String, callback: (success: Boolean, response: JSONObject?) -> Unit) {
+        val headers = HashMap<String, String>()
+        headers["Authorization"] = "Token $token"
+        requestAPI(Request.Method.GET, address, path, headers, null, callback)
+    }
+
     private fun requestAPI(method: Int, address: String, path: String, headers: HashMap<String, String>?, body: ByteArray?, callback: (success: Boolean, response: JSONObject?) -> Unit) {
-
-
-
-        val textField = findViewById<TextView>(R.id.main_text)
 
         val url = "$address$path"
         Log.i("Address", address)
