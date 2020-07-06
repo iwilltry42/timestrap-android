@@ -30,37 +30,22 @@
         android:layout_marginBottom="64dp"
         android:enabled="true"
         android:text="@string/main_button"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/main_button"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/task_fragment"
+        android:name="dev.iwilltry42.timestrap.TaskFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_title">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/response_text"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:textAlignment="viewStart" />
-            <androidx.fragment.app.FragmentContainerView android:name="dev.iwilltry42.timestrap.TaskFragment"
-                android:id="@+id/task_fragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-            />
-        </LinearLayout>
-    </ScrollView>
+        app:layout_constraintTop_toBottomOf="@id/main_button"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
