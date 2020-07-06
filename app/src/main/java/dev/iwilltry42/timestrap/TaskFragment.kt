@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import dev.iwilltry42.timestrap.tasks.TaskContent
 
 /**
@@ -28,6 +29,7 @@ class TaskFragment : Fragment(), OnItemClickListener {
 
     override fun onItemClicked(task: TaskContent.Task) {
         Log.i("Clicked Task", task.name)
+        Toast.makeText(this.context, "Checkout ${task.url}", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreateView(

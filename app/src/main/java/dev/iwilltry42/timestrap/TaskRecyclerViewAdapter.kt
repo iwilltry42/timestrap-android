@@ -10,7 +10,6 @@ import dev.iwilltry42.timestrap.tasks.TaskContent.Task
 
 /**
  * [RecyclerView.Adapter] that can display a [Task].
- * TODO: Replace the implementation with code for your data type.
  */
 class TaskRecyclerViewAdapter(
     private val values: List<Task>,
@@ -31,7 +30,7 @@ class TaskRecyclerViewAdapter(
     override fun getItemCount(): Int = values.size
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val itemName: TextView = view.findViewById(R.id.item_name)
+        private val itemName: TextView = view.findViewById(R.id.item_name)
 
         override fun toString(): String {
             return super.toString() + " '" + itemName.text + "'"
