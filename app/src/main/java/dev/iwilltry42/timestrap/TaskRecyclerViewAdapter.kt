@@ -25,7 +25,7 @@ class TaskRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
         holder.idView.text = item.id
-        holder.contentView.text = item.content
+        holder.contentView.text = item.name
     }
 
     override fun getItemCount(): Int = values.size
