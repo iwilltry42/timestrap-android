@@ -27,6 +27,7 @@ class TaskFragment : Fragment(), OnItemClickListener {
         }
     }
 
+    // custom on click listener implementing TaskRecyclerViewAdapter.OnItemClickListener
     override fun onItemClicked(task: TaskContent.Task) {
         Log.i("Clicked Task", task.name)
         Toast.makeText(this.context, "Checkout ${task.url}", Toast.LENGTH_SHORT).show()
@@ -54,10 +55,8 @@ class TaskFragment : Fragment(), OnItemClickListener {
 
     companion object {
 
-        // TODO: Customize parameter argument names
         const val ARG_COLUMN_COUNT = "column-count"
 
-        // TODO: Customize parameter initialization
         @JvmStatic
         fun newInstance(columnCount: Int) =
             TaskFragment().apply {

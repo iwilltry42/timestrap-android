@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
         AppPreferences.init(this)
         setContentView(R.layout.activity_main)
 
+        // Custom Welcome if User is logged in
         if (AppPreferences.isLoggedIn) {
             main_title.text = getString(R.string.main_text, AppPreferences.username)
         }
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // fetch and display the list of existing tasks from the Timestrap Server
     private fun fetchTasks() {
         requestAPIArrayWithTokenAuth(this, AppPreferences.address, "/api/tasks/", AppPreferences.token) {success, response ->
             if (success && response != null) {

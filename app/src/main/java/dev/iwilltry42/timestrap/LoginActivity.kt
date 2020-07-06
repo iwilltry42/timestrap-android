@@ -28,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
         if (AppPreferences.isLoggedIn) {
             findViewById<EditText>(R.id.username).setText(AppPreferences.username)
             findViewById<EditText>(R.id.address).setText(AppPreferences.address)
-            requestAPIArrayWithTokenAuth(this, AppPreferences.address, "/api/tasks", AppPreferences.token) {success, response ->
+            requestAPIArrayWithTokenAuth(this, AppPreferences.address, "/api/tasks", AppPreferences.token) { success, _ ->
                 if (success) {
                     login_title.text = "Hey there ${AppPreferences.username}"
                 } else {
@@ -71,6 +71,7 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
+    // Use basic auth against the API to retrieve an API-Token -> on callback, proceed with setting the user details
     private fun fetchAPITokenAndProceed(address: String, username: String, password: String) {
         val auth = Base64.encodeToString("$username:$password".toByteArray(), Base64.NO_WRAP)
         val bodyString = HashMap<String, String>()
@@ -79,6 +80,7 @@ class LoginActivity : AppCompatActivity() {
         requestAPIObject(this, Request.Method.POST, address, "/api/auth_token/", null, JSONObject(bodyString as Map<*, *>).toString().toByteArray(), this::setAPITokenAndProceed)
     }
 
+    // If an API-Token could be fetched, save the user's details in App Preferences and move on to the next activity
     private fun setAPITokenAndProceed(success: Boolean, response: JSONObject?) {
         if (success) {
             Log.e("API", "Fetched token ${response?.get("token")?.toString()}")

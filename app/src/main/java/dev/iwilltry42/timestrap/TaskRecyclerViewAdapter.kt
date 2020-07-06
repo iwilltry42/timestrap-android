@@ -36,6 +36,7 @@ class TaskRecyclerViewAdapter(
             return super.toString() + " '" + itemName.text + "'"
         }
 
+        // bind item to the view holder
         fun bind(task: Task, clickListener: OnItemClickListener) {
             itemName.text = task.name
 
@@ -46,6 +47,7 @@ class TaskRecyclerViewAdapter(
     }
 }
 
+// interface for custom on-click listeners for the cardview items
 interface OnItemClickListener {
     fun onItemClicked(task: Task)
 }

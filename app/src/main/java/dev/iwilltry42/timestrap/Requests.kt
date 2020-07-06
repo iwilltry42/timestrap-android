@@ -10,6 +10,7 @@ import com.android.volley.toolbox.Volley
 import org.json.JSONArray
 import org.json.JSONObject
 
+// send a generic request to the Timestrap expecting a JSONObject to be returned
 fun requestAPIObject(context: Context, method: Int, address: String, path: String, headers: HashMap<String, String>?, body: ByteArray?, callback: (success: Boolean, response: JSONObject?) -> Unit) {
 
     val url = "$address$path"
@@ -38,6 +39,7 @@ fun requestAPIObject(context: Context, method: Int, address: String, path: Strin
     queue.add(jsonObjectRequest)
 }
 
+// send a generic request to the Timestrap expecting a JSONArray to be returned
 fun requestAPIArray(context: Context, method: Int, address: String, path: String, headers: HashMap<String, String>?, body: ByteArray?, callback: (success: Boolean, response: JSONArray?) -> Unit) {
 
     val url = "$address$path"
@@ -66,12 +68,14 @@ fun requestAPIArray(context: Context, method: Int, address: String, path: String
     queue.add(jsonArrayRequest)
 }
 
+// send a token-authenticated request to the Timestrap expecting a JSONObject to be returned
 fun requestAPIObjectWithTokenAuth(context: Context, address: String, path: String, token: String, callback: (success: Boolean, response: JSONObject?) -> Unit) {
     val headers = HashMap<String, String>()
     headers["Authorization"] = "Token $token"
     requestAPIObject(context, Request.Method.GET, address, path, headers, null, callback)
 }
 
+// send a token-authenticated request to the Timestrap expecting a JSONArray to be returned
 fun requestAPIArrayWithTokenAuth(context: Context, address: String, path: String, token: String, callback: (success: Boolean, response: JSONArray?) -> Unit) {
     val headers = HashMap<String, String>()
     headers["Authorization"] = "Token $token"
