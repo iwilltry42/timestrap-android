@@ -28,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
         if (AppPreferences.isLoggedIn) {
             findViewById<EditText>(R.id.username).setText(AppPreferences.username)
             findViewById<EditText>(R.id.address).setText(AppPreferences.address)
-            requestAPIWithTokenAuth(this, AppPreferences.address, "/api/entries", AppPreferences.token) {success, response ->
+            requestAPIArrayWithTokenAuth(this, AppPreferences.address, "/api/tasks", AppPreferences.token) {success, response ->
                 if (success) {
                     login_title.text = "Hey there ${AppPreferences.username}"
                 } else {
@@ -76,7 +76,7 @@ class LoginActivity : AppCompatActivity() {
         val bodyString = HashMap<String, String>()
         bodyString["username"] = username
         bodyString["password"] = password
-        requestAPI(this, Request.Method.POST, address, "/api/auth_token/", null, JSONObject(bodyString as Map<*, *>).toString().toByteArray(), this::setAPITokenAndProceed)
+        requestAPIObject(this, Request.Method.POST, address, "/api/auth_token/", null, JSONObject(bodyString as Map<*, *>).toString().toByteArray(), this::setAPITokenAndProceed)
     }
 
     private fun setAPITokenAndProceed(success: Boolean, response: JSONObject?) {

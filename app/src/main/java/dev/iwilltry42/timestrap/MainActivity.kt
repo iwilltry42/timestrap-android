@@ -11,6 +11,8 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
@@ -33,12 +35,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getEntries() {
-        requestAPIWithTokenAuth(this, AppPreferences.address, "/api/entries/", AppPreferences.token) {success, response ->
+        requestAPIArrayWithTokenAuth(this, AppPreferences.address, "/api/tasks/", AppPreferences.token) {success, response ->
             val responseText = findViewById<TextView>(R.id.response_text)
             if (success) {
-                responseText.text = response.toString()
+                responseText.text = getString(R.string.response_field, GsonBuilder().setPrettyPrinting().create().toJson(response))
             } else {
-                responseText.text = "Request Failed"
+                responseText.text = "Request Failed!"
             }
         }
     }

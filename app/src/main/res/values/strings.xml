@@ -18,5 +18,5 @@
     <string name="login_failed">"Login failed"</string>
 
     <!-- API Response Field -->
-    <string name="response_field">Response:\n# entries: %s</string>
+    <string name="response_field">Response:\n %s</string>
 </resources>
