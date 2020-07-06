@@ -7,13 +7,13 @@ object TaskContent {
     /**
      * List of tasks
      */
-    val ITEMS: MutableList<TaskItem> = ArrayList()
+    val TASKS: MutableList<Task> = ArrayList()
 
 
     /**
      * Task
      */
-    data class TaskItem(val id: String, val name: String, val rate: String?, val url: String) {
+    data class Task(val id: String, val name: String, val rate: String?, val url: String) {
         override fun toString(): String = name
     }
 }
