@@ -30,13 +30,11 @@ class LoginActivity : AppCompatActivity() {
             findViewById<EditText>(R.id.address).setText(AppPreferences.address)
             requestAPIArrayWithTokenAuth(this, AppPreferences.address, "/api/tasks", AppPreferences.token) { success, _ ->
                 if (success) {
-                    login_title.text = "Hey there ${AppPreferences.username}"
+                    login_title.text = "Logged in as ${AppPreferences.username}"
                 } else {
                     login_title.text = "Failed Login, Try Again!"
                 }
             }
-            val intent = Intent(this, MainActivity::class.java).apply {}
-            startActivity(intent)
         }
 
         // Sign In Button
