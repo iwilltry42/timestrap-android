@@ -1,7 +1,5 @@
 package dev.iwilltry42.timestrap.entries
 
-import java.net.URL
-import java.time.Duration
 import java.util.*
 
 object EntryContent {
@@ -16,12 +14,12 @@ object EntryContent {
      * Entry
      */
     data class Entry(
-        val id: String,
+        val id: Int,
         val url: String,
         val project: String,
         val task: String,
         val user: String,
-        val date: String,
+        val date: Date,
         val duration: String,
         val datetimeStart: String,
         val datetimeEnd: String,

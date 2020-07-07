@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import dev.iwilltry42.timestrap.entries.EntryContent
 import org.json.JSONArray
+import java.text.SimpleDateFormat
 
 const val EXTRA_TASK_NAME = "dev.iwilltry42.timestrap.TASK_NAME"
 
@@ -35,12 +36,12 @@ class TaskDetailActivity : AppCompatActivity() {
                     EntryContent.ENTRIES.add(
                         i,
                         EntryContent.Entry(
-                            entry["id"].toString(),
+                            entry["id"].toString().toInt(),
                             entry["url"].toString(),
                             entry["project"].toString(),
                             entry["task"].toString(),
                             entry["user"].toString(),
-                            entry["date"].toString(),
+                            SimpleDateFormat("yyyy-MM-dd").parse(entry["date"].toString()),
                             entry["duration"].toString(),
                             entry["datetime_start"].toString(),
                             entry["datetime_end"].toString(),
@@ -50,6 +51,7 @@ class TaskDetailActivity : AppCompatActivity() {
                 }
                 Log.d("Tasks", "$EntryContent.ENTRIES")
                 Toast.makeText(this, "Fetched ${EntryContent.ENTRIES.size} entries", Toast.LENGTH_SHORT).show()
+                EntryContent.ENTRIES.sortBy {it.id}
                 findViewById<RecyclerView>(R.id.list).adapter?.notifyDataSetChanged()
             } else {
                 Toast.makeText(this, "Request Failed!", Toast.LENGTH_SHORT).show()

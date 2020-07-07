@@ -30,10 +30,11 @@ class EntryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_item_list, container, false)
+        val view = inflater.inflate(R.layout.task_detail_entry_list, container, false)
 
         // Set the adapter
         if (view is RecyclerView) {
+            EntryContent.ENTRIES.sortBy {it.id}
             val useAdapter = EntryRecyclerViewAdapter(EntryContent.ENTRIES)
             with(view) {
                 layoutManager = when {
@@ -52,7 +53,7 @@ class EntryFragment : Fragment() {
 
         @JvmStatic
         fun newInstance(columnCount: Int) =
-            TaskFragment().apply {
+            EntryFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_COLUMN_COUNT, columnCount)
                 }

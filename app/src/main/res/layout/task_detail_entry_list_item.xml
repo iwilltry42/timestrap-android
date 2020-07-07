@@ -30,6 +30,14 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/item_entry_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:padding="1dp"
+                android:textAlignment="viewStart" />
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
