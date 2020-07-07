@@ -24,6 +24,10 @@ class MainActivity : AppCompatActivity() {
         main_button.setOnClickListener {
             fetchTasks()
         }
+
+        app_bar_button_tasks.setOnClickListener {
+            fetchTasks()
+        }
     }
 
     // fetch and display the list of existing tasks from the Timestrap Server
