@@ -18,8 +18,8 @@
         tools:layout="@layout/fragment_projects" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="dev.iwilltry42.timestrap.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_clients"
+        android:name="dev.iwilltry42.timestrap.ui.clients.ClientsFragment"
+        android:label="@string/title_clients"
+        tools:layout="@layout/fragment_clients" />
 </navigation>

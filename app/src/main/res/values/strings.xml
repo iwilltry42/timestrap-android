@@ -4,7 +4,7 @@
     <!-- App Bar -->
     <string name="title_tasks">Tasks</string>
     <string name="title_projects">Projects</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_clients">Clients</string>
 
     <!-- Main Activity -->
     <string name="main_text">Hello there %s</string>
