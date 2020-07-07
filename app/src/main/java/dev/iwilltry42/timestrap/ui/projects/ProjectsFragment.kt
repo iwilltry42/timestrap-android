@@ -1,4 +1,4 @@
-package dev.iwilltry42.timestrap.ui.tasks
+package dev.iwilltry42.timestrap.ui.projects
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,12 +12,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import dev.iwilltry42.timestrap.*
-import dev.iwilltry42.timestrap.content.tasks.TaskContent
+import dev.iwilltry42.timestrap.content.projects.ProjectContent
 
 /**
  * A fragment representing a list of Items.
  */
-class TasksFragment : Fragment(), OnItemClickListener {
+class ProjectsFragment : Fragment(), OnItemClickListener {
 
     private var columnCount = 2
 
@@ -28,20 +28,42 @@ class TasksFragment : Fragment(), OnItemClickListener {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
         }
 
-        fetchTasks()
+        fetchProjects()
     }
 
     // fetch and display the list of existing tasks from the Timestrap Server
-    private fun fetchTasks() {
-        requestAPIArrayWithTokenAuth(this.requireContext(), AppPreferences.address, "/api/tasks/", AppPreferences.token) { success, response ->
+    private fun fetchProjects() {
+        requestAPIArrayWithTokenAuth(
+            this.requireContext(),
+            AppPreferences.address,
+            "/api/projects/",
+            AppPreferences.token
+        ) { success, response ->
             if (success && response != null) {
-                TaskContent.TASKS.clear()
-                for (i in 0 until  response.length()) {
-                    val task = response.getJSONObject(i)
-                    TaskContent.TASKS.add(i, TaskContent.Task(task["id"].toString(), task["name"].toString(), task["hourly_rate"].toString(), task["url"].toString()))
+                ProjectContent.PROJECTS.clear()
+                for (i in 0 until response.length()) {
+                    val project = response.getJSONObject(i)
+                    ProjectContent.PROJECTS.add(
+                        i,
+                        ProjectContent.Project(
+                            project["id"].toString().toInt(),
+                            project["url"].toString(),
+                            project["client"].toString(),
+                            project["name"].toString(),
+                            project["archive"].toString().toBoolean(),
+                            project["estimate"].toString(),
+                            project["total_entries"].toString().toInt(),
+                            project["total_duration"].toString(),
+                            project["percent_done"].toString()
+                        )
+                    )
                 }
-                Log.d("Tasks", "$TaskContent.ITEMS")
-                Toast.makeText(this.requireContext(), "Fetched ${TaskContent.TASKS.size} tasks", Toast.LENGTH_SHORT).show()
+                Log.d("Tasks", "$ProjectContent.PROJECTS")
+                Toast.makeText(
+                    this.requireContext(),
+                    "Fetched ${ProjectContent.PROJECTS.size} projects",
+                    Toast.LENGTH_SHORT
+                ).show()
                 view?.findViewById<RecyclerView>(R.id.list)?.adapter?.notifyDataSetChanged()
             } else {
                 Toast.makeText(this.requireContext(), "Request Failed!", Toast.LENGTH_SHORT).show()
@@ -50,13 +72,9 @@ class TasksFragment : Fragment(), OnItemClickListener {
     }
 
     // custom on click listener implementing TaskRecyclerViewAdapter.OnItemClickListener
-    override fun onItemClicked(task: TaskContent.Task) {
-        Log.i("Clicked Task", task.name)
-        Toast.makeText(this.context, "Checkout ${task.url}", Toast.LENGTH_SHORT).show()
-        val intent = Intent(super.getContext(), TaskDetailActivity::class.java).apply {
-            putExtra(EXTRA_TASK_NAME, task.name)
-        }
-        startActivity(intent)
+    override fun onItemClicked(project: ProjectContent.Project) {
+        Log.i("Clicked Task", project.name)
+        Toast.makeText(this.context, "Checkout ${project.url}", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreateView(
@@ -67,7 +85,7 @@ class TasksFragment : Fragment(), OnItemClickListener {
 
         // Set the adapter
         if (view is RecyclerView) {
-            val useAdapter = TaskRecyclerViewAdapter(TaskContent.TASKS, this)
+            val useAdapter = ProjectRecyclerViewAdapter(ProjectContent.PROJECTS, this)
             with(view) {
                 layoutManager = when {
                     columnCount <= 1 -> LinearLayoutManager(context)
@@ -85,7 +103,7 @@ class TasksFragment : Fragment(), OnItemClickListener {
 
         @JvmStatic
         fun newInstance(columnCount: Int) =
-            TasksFragment().apply {
+            ProjectsFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_COLUMN_COUNT, columnCount)
                 }

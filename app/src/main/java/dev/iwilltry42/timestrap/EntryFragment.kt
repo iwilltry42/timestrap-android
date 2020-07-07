@@ -8,8 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import dev.iwilltry42.timestrap.entries.EntryContent
-import dev.iwilltry42.timestrap.tasks.TaskContent
+import dev.iwilltry42.timestrap.content.entries.EntryContent
 
 /**
  * A fragment representing a list of Items.

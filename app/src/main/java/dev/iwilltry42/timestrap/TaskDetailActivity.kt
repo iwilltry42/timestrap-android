@@ -6,11 +6,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import dev.iwilltry42.timestrap.entries.EntryContent
-import dev.iwilltry42.timestrap.entries.formatDate
+import dev.iwilltry42.timestrap.content.entries.EntryContent
+import dev.iwilltry42.timestrap.content.entries.formatDate
 import org.json.JSONArray
 import java.text.SimpleDateFormat
-import java.time.Duration
 
 const val EXTRA_TASK_NAME = "dev.iwilltry42.timestrap.TASK_NAME"
 

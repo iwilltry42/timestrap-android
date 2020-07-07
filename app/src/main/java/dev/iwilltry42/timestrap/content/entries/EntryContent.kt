@@ -1,9 +1,8 @@
-package dev.iwilltry42.timestrap.entries
+package dev.iwilltry42.timestrap.content.entries
 
 import android.util.Log
 import java.lang.Exception
 import java.text.SimpleDateFormat
-import java.time.Duration
 import java.util.*
 import kotlin.collections.ArrayList
 

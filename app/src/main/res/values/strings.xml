@@ -2,8 +2,8 @@
     <string name="app_name">Timestrap</string>
 
     <!-- App Bar -->
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_tasks">Tasks</string>
+    <string name="title_projects">Projects</string>
     <string name="title_notifications">Notifications</string>
 
     <!-- Main Activity -->

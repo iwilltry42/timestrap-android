@@ -5,8 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import dev.iwilltry42.timestrap.entries.EntryContent
-import java.text.SimpleDateFormat
+import dev.iwilltry42.timestrap.content.entries.EntryContent
 
 /**
  * [RecyclerView.Adapter] that can display an [Entry].

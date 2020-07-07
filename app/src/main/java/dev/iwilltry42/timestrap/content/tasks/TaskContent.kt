@@ -1,4 +1,4 @@
-package dev.iwilltry42.timestrap.tasks
+package dev.iwilltry42.timestrap.content.tasks
 
 import java.util.ArrayList
 

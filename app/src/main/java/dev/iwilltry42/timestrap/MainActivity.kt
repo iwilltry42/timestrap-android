@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
-import dev.iwilltry42.timestrap.tasks.TaskContent
+import dev.iwilltry42.timestrap.content.tasks.TaskContent
 import kotlinx.android.synthetic.main.activity_main.*
 
 
