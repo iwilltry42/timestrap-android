@@ -1,10 +1,10 @@
-package dev.iwilltry42.timestrap
-
+package dev.iwilltry42.timestrap.ui.tasks
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import dev.iwilltry42.timestrap.R
 
 import dev.iwilltry42.timestrap.tasks.TaskContent.Task
 
@@ -18,7 +18,7 @@ class TaskRecyclerViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_item, parent, false)
+            .inflate(R.layout.fragment_task_list_item, parent, false)
         return ViewHolder(view)
     }
 

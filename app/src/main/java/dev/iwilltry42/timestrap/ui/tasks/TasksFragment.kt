@@ -1,4 +1,4 @@
-package dev.iwilltry42.timestrap
+package dev.iwilltry42.timestrap.ui.tasks
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,12 +11,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import dev.iwilltry42.timestrap.*
 import dev.iwilltry42.timestrap.tasks.TaskContent
 
 /**
  * A fragment representing a list of Items.
  */
-class TaskFragment : Fragment(), OnItemClickListener {
+class TasksFragment : Fragment(), OnItemClickListener {
 
     private var columnCount = 2
 
@@ -25,6 +26,26 @@ class TaskFragment : Fragment(), OnItemClickListener {
 
         arguments?.let {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
+        }
+
+        fetchTasks()
+    }
+
+    // fetch and display the list of existing tasks from the Timestrap Server
+    private fun fetchTasks() {
+        requestAPIArrayWithTokenAuth(this.requireContext(), AppPreferences.address, "/api/tasks/", AppPreferences.token) { success, response ->
+            if (success && response != null) {
+                TaskContent.TASKS.clear()
+                for (i in 0 until  response.length()) {
+                    val task = response.getJSONObject(i)
+                    TaskContent.TASKS.add(i, TaskContent.Task(task["id"].toString(), task["name"].toString(), task["hourly_rate"].toString(), task["url"].toString()))
+                }
+                Log.d("Tasks", "$TaskContent.ITEMS")
+                Toast.makeText(this.requireContext(), "Fetched ${TaskContent.TASKS.size} tasks", Toast.LENGTH_SHORT).show()
+                view?.findViewById<RecyclerView>(R.id.list)?.adapter?.notifyDataSetChanged()
+            } else {
+                Toast.makeText(this.requireContext(), "Request Failed!", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -42,7 +63,7 @@ class TaskFragment : Fragment(), OnItemClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_item_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_task_list, container, false)
 
         // Set the adapter
         if (view is RecyclerView) {
@@ -64,7 +85,7 @@ class TaskFragment : Fragment(), OnItemClickListener {
 
         @JvmStatic
         fun newInstance(columnCount: Int) =
-            TaskFragment().apply {
+            TasksFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_COLUMN_COUNT, columnCount)
                 }
