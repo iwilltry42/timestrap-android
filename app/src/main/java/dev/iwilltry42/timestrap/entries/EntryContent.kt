@@ -16,13 +16,13 @@ object EntryContent {
      * Entry
      */
     data class Entry(
-        val id: Int,
-        val url: URL,
-        val project: URL,
-        val task: URL,
+        val id: String,
+        val url: String,
+        val project: String,
+        val task: String,
         val user: String,
-        val date: Date,
-        val duration: Duration,
+        val date: String,
+        val duration: String,
         val datetimeStart: String,
         val datetimeEnd: String,
         val note: String?
