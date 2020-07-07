@@ -39,7 +39,7 @@ class EntryRecyclerViewAdapter(
         // bind item to the view holder
         fun bind(entry: EntryContent.Entry) {
             itemName.text = entry.id.toString()
-            itemDate.text = SimpleDateFormat("yyyy-MM-dd").format(entry.date).toString()
+            itemDate.text = entry.datetimeStart.toString() + " -> " + entry.datetimeEnd.toString()
 
         }
     }

@@ -7,8 +7,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import dev.iwilltry42.timestrap.entries.EntryContent
+import dev.iwilltry42.timestrap.entries.formatDate
 import org.json.JSONArray
 import java.text.SimpleDateFormat
+import java.time.Duration
 
 const val EXTRA_TASK_NAME = "dev.iwilltry42.timestrap.TASK_NAME"
 
@@ -43,8 +45,8 @@ class TaskDetailActivity : AppCompatActivity() {
                             entry["user"].toString(),
                             SimpleDateFormat("yyyy-MM-dd").parse(entry["date"].toString()),
                             entry["duration"].toString(),
-                            entry["datetime_start"].toString(),
-                            entry["datetime_end"].toString(),
+                            formatDate(entry["datetime_start"].toString()),
+                            formatDate(entry["datetime_end"].toString()),
                             entry["note"].toString()
                         )
                     )
