@@ -5,6 +5,7 @@
     <string name="title_tasks">Tasks</string>
     <string name="title_projects">Projects</string>
     <string name="title_clients">Clients</string>
+    <string name="title_settings">Settings</string>
 
     <!-- Main Activity -->
     <string name="main_text">Hello there %s</string>

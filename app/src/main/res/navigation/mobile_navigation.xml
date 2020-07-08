@@ -22,4 +22,10 @@
         android:name="dev.iwilltry42.timestrap.ui.clients.ClientsFragment"
         android:label="@string/title_clients"
         tools:layout="@layout/fragment_clients" />
+
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="dev.iwilltry42.timestrap.ui.settings.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>
