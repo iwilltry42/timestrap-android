@@ -1,5 +1,6 @@
 package dev.iwilltry42.timestrap.ui.settings
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import dev.iwilltry42.timestrap.*
 import dev.iwilltry42.timestrap.content.settings.SettingsContent
+import dev.iwilltry42.timestrap.old.MainActivity
 
 /**
  * A fragment representing a list of Items.
@@ -31,8 +33,8 @@ class SettingsFragment : Fragment(), OnItemClickListener {
 
         SettingsContent.SETTINGS.add(
             0, SettingsContent.Setting(
-                "Test-Setting",
-                MainActivity::class.java
+                "Login",
+                LoginActivity::class.java
             )
         )
 
@@ -50,6 +52,8 @@ class SettingsFragment : Fragment(), OnItemClickListener {
     override fun onItemClicked(setting: SettingsContent.Setting) {
         Log.i("Clicked Setting", setting.name)
         Toast.makeText(this.context, "Clicked Setting ${setting.name}", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this.context, setting.act)
+        startActivity(intent)
     }
 
     override fun onCreateView(

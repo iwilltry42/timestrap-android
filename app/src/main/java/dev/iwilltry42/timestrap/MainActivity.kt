@@ -1,53 +1,27 @@
 package dev.iwilltry42.timestrap
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.*
-import androidx.recyclerview.widget.RecyclerView
-import dev.iwilltry42.timestrap.content.tasks.TaskContent
-import kotlinx.android.synthetic.main.activity_main.*
-
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppPreferences.init(this)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_home)
+        val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
-        // Custom Welcome if User is logged in
-        if (AppPreferences.isLoggedIn) {
-            main_title.text = getString(R.string.main_text, AppPreferences.username)
-        }
-
-        main_button.setOnClickListener {
-            fetchTasks()
-        }
-
-        app_bar_button_tasks.setOnClickListener {
-            fetchTasks()
-        }
+        val navController = findNavController(R.id.nav_host_fragment)
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        val appBarConfiguration = AppBarConfiguration(setOf(
+            R.id.navigation_home, R.id.navigation_projects, R.id.navigation_clients))
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
     }
-
-    // fetch and display the list of existing tasks from the Timestrap Server
-    private fun fetchTasks() {
-        requestAPIArrayWithTokenAuth(this, AppPreferences.address, "/api/tasks/", AppPreferences.token) {success, response ->
-            if (success && response != null) {
-                TaskContent.TASKS.clear()
-                for (i in 0 until  response.length()) {
-                    val task = response.getJSONObject(i)
-                    TaskContent.TASKS.add(i, TaskContent.Task(task["id"].toString(), task["name"].toString(), task["hourly_rate"].toString(), task["url"].toString()))
-                }
-                Log.d("Tasks", "$TaskContent.ITEMS")
-                Toast.makeText(this, "Fetched ${TaskContent.TASKS.size} tasks", Toast.LENGTH_SHORT).show()
-                findViewById<RecyclerView>(R.id.list).adapter?.notifyDataSetChanged()
-            } else {
-                Toast.makeText(this, "Request Failed!", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-
 }
-

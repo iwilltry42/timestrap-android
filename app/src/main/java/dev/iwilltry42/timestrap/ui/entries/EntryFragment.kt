@@ -1,4 +1,4 @@
-package dev.iwilltry42.timestrap
+package dev.iwilltry42.timestrap.ui.entries
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import dev.iwilltry42.timestrap.R
 import dev.iwilltry42.timestrap.content.entries.EntryContent
 
 /**
@@ -34,7 +35,10 @@ class EntryFragment : Fragment() {
         // Set the adapter
         if (view is RecyclerView) {
             EntryContent.ENTRIES.sortBy {it.id}
-            val useAdapter = EntryRecyclerViewAdapter(EntryContent.ENTRIES)
+            val useAdapter =
+                EntryRecyclerViewAdapter(
+                    EntryContent.ENTRIES
+                )
             with(view) {
                 layoutManager = when {
                     columnCount <= 1 -> LinearLayoutManager(context)

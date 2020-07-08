@@ -18,7 +18,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_entry_list"
-        android:name="dev.iwilltry42.timestrap.EntryFragment"
+        android:name="dev.iwilltry42.timestrap.ui.entries.EntryFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
