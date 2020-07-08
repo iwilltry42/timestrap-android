@@ -27,6 +27,8 @@ class SettingsFragment : Fragment(), OnItemClickListener {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
         }
 
+        SettingsContent.SETTINGS.clear()
+
         SettingsContent.SETTINGS.add(
             0, SettingsContent.Setting(
                 "Test-Setting",
