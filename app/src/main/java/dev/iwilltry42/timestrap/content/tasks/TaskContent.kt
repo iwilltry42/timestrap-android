@@ -17,7 +17,11 @@ object TaskContent {
      * Rate (Hourly)
      * URL
      */
-    data class Task(val id: String, val name: String, val rate: String?, val url: String) {
+    data class Task(
+        val id: Int,
+        val name: String,
+        val rate: String?,
+        val url: String) {
         override fun toString(): String = name
     }
 }

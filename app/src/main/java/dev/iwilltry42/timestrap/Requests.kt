@@ -14,7 +14,7 @@ import org.json.JSONObject
 fun requestAPIObject(context: Context, method: Int, address: String, path: String, headers: HashMap<String, String>?, body: ByteArray?, callback: (success: Boolean, response: JSONObject?) -> Unit) {
 
     val url = "$address$path"
-    Log.i("Address", address)
+    Log.d("RequestObject", url)
     val queue = Volley.newRequestQueue(context)
 
     val jsonObjectRequest = object: JsonObjectRequest(
@@ -43,7 +43,7 @@ fun requestAPIObject(context: Context, method: Int, address: String, path: Strin
 fun requestAPIArray(context: Context, method: Int, address: String, path: String, headers: HashMap<String, String>?, body: ByteArray?, callback: (success: Boolean, response: JSONArray?) -> Unit) {
 
     val url = "$address$path"
-    Log.i("Address", address)
+    Log.d("RequestArray", url)
     val queue = Volley.newRequestQueue(context)
 
     val jsonArrayRequest = object: JsonArrayRequest(

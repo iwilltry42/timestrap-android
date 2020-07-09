@@ -38,7 +38,12 @@ class TasksFragment : Fragment(), OnItemClickListener {
                 TaskContent.TASKS.clear()
                 for (i in 0 until  response.length()) {
                     val task = response.getJSONObject(i)
-                    TaskContent.TASKS.add(i, TaskContent.Task(task["id"].toString(), task["name"].toString(), task["hourly_rate"].toString(), task["url"].toString()))
+                    TaskContent.TASKS.add(i,
+                        TaskContent.Task(
+                            task["id"].toString().toInt(),
+                            task["name"].toString(),
+                            task["hourly_rate"].toString(),
+                            task["url"].toString()))
                 }
                 Log.d("Tasks", "$TaskContent.ITEMS")
                 Toast.makeText(this.requireContext(), "Fetched ${TaskContent.TASKS.size} tasks", Toast.LENGTH_SHORT).show()
@@ -52,9 +57,9 @@ class TasksFragment : Fragment(), OnItemClickListener {
     // custom on click listener implementing TaskRecyclerViewAdapter.OnItemClickListener
     override fun onItemClicked(task: TaskContent.Task) {
         Log.i("Clicked Task", task.name)
-        Toast.makeText(this.context, "Checkout ${task.url}", Toast.LENGTH_SHORT).show()
         val intent = Intent(super.getContext(), TaskDetailActivity::class.java).apply {
             putExtra(EXTRA_TASK_NAME, task.name)
+            putExtra(EXTRA_TASK_ID, task.id.toString())
         }
         startActivity(intent)
     }

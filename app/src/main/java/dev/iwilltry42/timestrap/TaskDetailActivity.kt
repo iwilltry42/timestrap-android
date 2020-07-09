@@ -12,6 +12,7 @@ import org.json.JSONArray
 import java.text.SimpleDateFormat
 
 const val EXTRA_TASK_NAME = "dev.iwilltry42.timestrap.TASK_NAME"
+const val EXTRA_TASK_ID = "dev.iwilltry42.timestrap.TASK_ID"
 
 class TaskDetailActivity : AppCompatActivity() {
 
@@ -22,13 +23,13 @@ class TaskDetailActivity : AppCompatActivity() {
         // Custom Welcome if User is logged in
         findViewById<TextView>(R.id.text_task_title).text = intent.getStringExtra(EXTRA_TASK_NAME)
 
-        fetchEntries()
+        fetchEntries("task=${intent.getStringExtra(EXTRA_TASK_ID)}")
 
     }
 
     // fetch and display the list of existing entries from the Timestrap Server
-    private fun fetchEntries() {
-        requestAPIObjectWithTokenAuth(this, AppPreferences.address, "/api/entries/?project=1", AppPreferences.token) {success, response ->
+    private fun fetchEntries(filter: String?) {
+        requestAPIObjectWithTokenAuth(this, AppPreferences.address, "/api/entries/?${filter}", AppPreferences.token) {success, response ->
             if (success && response != null) {
                 val resultList: JSONArray = response.getJSONArray("results")
                 EntryContent.ENTRIES.clear()
