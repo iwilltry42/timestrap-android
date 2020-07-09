@@ -57,7 +57,7 @@ class TasksFragment : Fragment(), OnItemClickListener {
     // custom on click listener implementing TaskRecyclerViewAdapter.OnItemClickListener
     override fun onItemClicked(task: TaskContent.Task) {
         Log.i("Clicked Task", task.name)
-        val intent = Intent(super.getContext(), TaskDetailActivity::class.java).apply {
+        val intent = Intent(super.getContext(), EntriesActivity::class.java).apply {
             putExtra(EXTRA_TASK_NAME, task.name)
             putExtra(EXTRA_TASK_ID, task.id.toString())
         }

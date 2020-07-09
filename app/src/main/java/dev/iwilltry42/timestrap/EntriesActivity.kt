@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat
 const val EXTRA_TASK_NAME = "dev.iwilltry42.timestrap.TASK_NAME"
 const val EXTRA_TASK_ID = "dev.iwilltry42.timestrap.TASK_ID"
 
-class TaskDetailActivity : AppCompatActivity() {
+class EntriesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -27,7 +27,7 @@
             />
         </activity>
 
-        <activity android:name=".TaskDetailActivity"
+        <activity android:name=".EntriesActivity"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
