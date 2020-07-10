@@ -26,7 +26,7 @@
     <string name="login_user_title">Timestrap User</string>
 
     <!-- Task List -->
-    <string name="task_item_chip_rate">Rate: %s$/h</string>
+    <string name="task_item_chip_rate">%s$/h</string>
 
     <!-- API Response Field -->
     <string name="response_field">Response:\n %s</string>
