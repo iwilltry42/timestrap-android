@@ -14,7 +14,6 @@ import android.widget.Toast
 import dev.iwilltry42.timestrap.*
 import dev.iwilltry42.timestrap.content.tasks.TaskContent
 import org.json.JSONObject
-import kotlin.reflect.typeOf
 
 /**
  * A fragment representing a list of Items.
@@ -69,7 +68,7 @@ class TasksFragment : Fragment(), OnItemClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_task_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_item_list, container, false)
 
         // Set the adapter
         if (view is RecyclerView) {

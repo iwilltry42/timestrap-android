@@ -28,6 +28,12 @@
     <!-- Task List -->
     <string name="task_item_chip_rate">%s$/h</string>
 
+    <!-- Entry List -->
+    <string name="entry_item_from_to">
+        From: %s\n
+        To: %s
+    </string>
+
     <!-- API Response Field -->
     <string name="response_field">Response:\n %s</string>
 

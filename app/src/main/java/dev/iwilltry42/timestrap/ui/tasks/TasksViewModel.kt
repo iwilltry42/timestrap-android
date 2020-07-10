@@ -1,5 +1,4 @@
 package dev.iwilltry42.timestrap.ui.tasks
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,6 @@ import com.google.android.material.chip.ChipGroup
 import dev.iwilltry42.timestrap.R
 
 import dev.iwilltry42.timestrap.content.tasks.TaskContent.Task
-import kotlinx.android.synthetic.main.fragment_task_list_item.view.*
 
 /**
  * [RecyclerView.Adapter] that can display a [Task].
@@ -22,7 +20,7 @@ class TaskRecyclerViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_task_list_item, parent, false)
+            .inflate(R.layout.fragment_item_list_item, parent, false)
         return ViewHolder(view)
     }
 

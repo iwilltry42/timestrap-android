@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/list"
-    android:name="dev.iwilltry42.timestrap.ui.entriesEntryFragment"
+    android:name="dev.iwilltry42.timestrap.TaskFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".ui.entries.EntryFragment"
-    tools:listitem="@layout/entry_list_item" />
+    tools:context=".ui.tasks.TasksFragment"
+    tools:listitem="@layout/fragment_item_list_item" />
