@@ -10,6 +10,7 @@ import com.google.android.material.chip.ChipGroup
 import dev.iwilltry42.timestrap.R
 
 import dev.iwilltry42.timestrap.content.tasks.TaskContent.Task
+import kotlinx.android.synthetic.main.fragment_task_list_item.view.*
 
 /**
  * [RecyclerView.Adapter] that can display a [Task].
@@ -44,8 +45,10 @@ class TaskRecyclerViewAdapter(
         fun bind(task: Task, clickListener: OnItemClickListener) {
             itemName.text = task.name
 
+            // Display the Task rate as a chip
             if (task.rate != null) {
                 val chipGroup = this.itemView.findViewById<ChipGroup>(R.id.item_chip_group)
+                chipGroup.removeAllViews() // remove all chips and then re-create them
                 val chipTaskRate = Chip(this.itemView.context)
                 chipTaskRate.text = this.itemView.context.getString(R.string.task_item_chip_rate, task.rate)
                 chipGroup.addView(chipTaskRate)
