@@ -1,9 +1,12 @@
 package dev.iwilltry42.timestrap.ui.tasks
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import dev.iwilltry42.timestrap.R
 
 import dev.iwilltry42.timestrap.content.tasks.TaskContent.Task
@@ -31,6 +34,7 @@ class TaskRecyclerViewAdapter(
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val itemName: TextView = view.findViewById(R.id.item_name)
+        private val itemDetail: TextView = view.findViewById(R.id.item_detail)
 
         override fun toString(): String {
             return super.toString() + " '" + itemName.text + "'"
@@ -39,6 +43,15 @@ class TaskRecyclerViewAdapter(
         // bind item to the view holder
         fun bind(task: Task, clickListener: OnItemClickListener) {
             itemName.text = task.name
+
+            if (task.rate != null) {
+                val chipGroup = this.itemView.findViewById<ChipGroup>(R.id.item_chip_group)
+                val chipTaskRate = Chip(this.itemView.context)
+                chipTaskRate.text = this.itemView.context.getString(R.string.task_item_chip_rate, task.rate)
+                chipGroup.addView(chipTaskRate)
+                chipGroup.visibility = View.VISIBLE
+            }
+
 
             itemView.setOnClickListener {
                 clickListener.onItemClicked(task)

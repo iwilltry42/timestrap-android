@@ -13,6 +13,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import dev.iwilltry42.timestrap.*
 import dev.iwilltry42.timestrap.content.tasks.TaskContent
+import org.json.JSONObject
+import kotlin.reflect.typeOf
 
 /**
  * A fragment representing a list of Items.
@@ -42,10 +44,10 @@ class TasksFragment : Fragment(), OnItemClickListener {
                         TaskContent.Task(
                             task["id"].toString().toInt(),
                             task["name"].toString(),
-                            task["hourly_rate"].toString(),
+                            if (task["hourly_rate"] == JSONObject.NULL) null else task["hourly_rate"].toString(),
                             task["url"].toString()))
                 }
-                Log.d("Tasks", "$TaskContent.ITEMS")
+                Log.d("Tasks", "${TaskContent.TASKS}")
                 Toast.makeText(this.requireContext(), "Fetched ${TaskContent.TASKS.size} tasks", Toast.LENGTH_SHORT).show()
                 view?.findViewById<RecyclerView>(R.id.list)?.adapter?.notifyDataSetChanged()
             } else {
