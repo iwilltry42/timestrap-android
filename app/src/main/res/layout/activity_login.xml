@@ -46,7 +46,9 @@
             android:hint="@string/login_address_hint"
             android:inputType="text"
             android:selectAllOnFocus="true"
-            android:autofillHints="address" />
+            android:autofillHints="address"
+            android:drawableStart="@drawable/ic_baseline_search_24"
+            android:drawablePadding="6dp"/>
     </LinearLayout>
 
 
@@ -74,7 +76,9 @@
             android:layout_height="wrap_content"
             android:hint="@string/login_username_hint"
             android:inputType="textPersonName"
-            android:selectAllOnFocus="true" />
+            android:selectAllOnFocus="true"
+            android:drawableStart="@drawable/ic_baseline_person_24"
+            android:drawablePadding="6dp"/>
 
         <EditText
             android:id="@+id/password"
@@ -84,7 +88,9 @@
             android:imeActionLabel="@string/action_sign_in_short"
             android:imeOptions="actionDone"
             android:inputType="textPassword"
-            android:selectAllOnFocus="true" />
+            android:selectAllOnFocus="true"
+            android:drawableStart="@drawable/ic_baseline_lock_24"
+            android:drawablePadding="6dp"/>
     </LinearLayout>
 
     <Button
