@@ -11,8 +11,8 @@ import dev.iwilltry42.timestrap.content.entries.formatDate
 import org.json.JSONArray
 import java.text.SimpleDateFormat
 
-const val EXTRA_TASK_NAME = "dev.iwilltry42.timestrap.TASK_NAME"
 const val EXTRA_TASK_ID = "dev.iwilltry42.timestrap.TASK_ID"
+const val EXTRA_PROJECT_ID = "dev.iwilltry42.timestrap.PROJECT_ID"
 
 class EntriesActivity : AppCompatActivity() {
 
@@ -20,10 +20,12 @@ class EntriesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task_detail)
 
-        // Custom Welcome if User is logged in
-        findViewById<TextView>(R.id.text_task_title).text = intent.getStringExtra(EXTRA_TASK_NAME)
+        findViewById<TextView>(R.id.text_task_title).text = "Entries"
 
-        fetchEntries("task=${intent.getStringExtra(EXTRA_TASK_ID)}")
+        fetchEntries("" +
+                "task=${if(intent.getStringExtra(EXTRA_TASK_ID) != null) intent.getStringExtra(EXTRA_TASK_ID) else ""}" +
+                "&project=${if(intent.getStringExtra(EXTRA_PROJECT_ID) != null) intent.getStringExtra(EXTRA_PROJECT_ID) else ""}" +
+                "")
 
     }
 
@@ -51,8 +53,7 @@ class EntriesActivity : AppCompatActivity() {
                         )
                     )
                 }
-                Log.d("Tasks", "$EntryContent.ENTRIES")
-                Toast.makeText(this, "Fetched ${EntryContent.ENTRIES.size} entries", Toast.LENGTH_SHORT).show()
+                Log.d("Entries", "${EntryContent.ENTRIES}")
                 EntryContent.ENTRIES.sortBy {it.id}
                 findViewById<RecyclerView>(R.id.list).adapter?.notifyDataSetChanged()
             } else {
