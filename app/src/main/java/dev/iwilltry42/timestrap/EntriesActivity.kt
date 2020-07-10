@@ -2,9 +2,11 @@ package dev.iwilltry42.timestrap
 
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import dev.iwilltry42.timestrap.content.entries.EntryContent
 import dev.iwilltry42.timestrap.content.entries.formatDate
@@ -23,10 +25,22 @@ class EntriesActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.text_task_title).text = "Entries"
 
         fetchEntries("" +
-                "task=${if(intent.getStringExtra(EXTRA_TASK_ID) != null) intent.getStringExtra(EXTRA_TASK_ID) else ""}" +
-                "&project=${if(intent.getStringExtra(EXTRA_PROJECT_ID) != null) intent.getStringExtra(EXTRA_PROJECT_ID) else ""}" +
-                "")
+            "task=${if(intent.getStringExtra(EXTRA_TASK_ID) != null) intent.getStringExtra(EXTRA_TASK_ID) else ""}" +
+            "&project=${if(intent.getStringExtra(EXTRA_PROJECT_ID) != null) intent.getStringExtra(EXTRA_PROJECT_ID) else ""}" +
+        "")
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+                true
+            }
+        }
     }
 
     // fetch and display the list of existing entries from the Timestrap Server

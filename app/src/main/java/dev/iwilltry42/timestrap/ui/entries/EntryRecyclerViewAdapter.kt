@@ -17,7 +17,7 @@ class EntryRecyclerViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.task_detail_entry_list_item, parent, false)
+            .inflate(R.layout.entry_list_item, parent, false)
         return ViewHolder(view)
     }
 
@@ -29,8 +29,8 @@ class EntryRecyclerViewAdapter(
     override fun getItemCount(): Int = values.size
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val itemName: TextView = view.findViewById(R.id.item_entry_name)
-        private val itemDate: TextView = view.findViewById(R.id.item_entry_date)
+        private val itemName: TextView = view.findViewById(R.id.entry_name)
+        private val itemDate: TextView = view.findViewById(R.id.entry_date)
 
         override fun toString(): String {
             return super.toString() + " '" + itemName.text + "'"

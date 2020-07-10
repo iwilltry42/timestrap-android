@@ -13,6 +13,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.commit
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dev.iwilltry42.timestrap.*
 import dev.iwilltry42.timestrap.content.projects.ProjectContent
 
@@ -75,8 +79,6 @@ class ProjectsFragment : Fragment(), OnItemClickListener {
 
     // custom on click listener implementing TaskRecyclerViewAdapter.OnItemClickListener
     override fun onItemClicked(project: ProjectContent.Project) {
-        Log.i("Clicked Project", project.name)
-        requireActivity().supportFragmentManager.beginTransaction().addToBackStack(null).commit()
         val intent = Intent(activity, EntriesActivity::class.java).apply {
             putExtra(EXTRA_PROJECT_ID, project.id.toString())
         }
