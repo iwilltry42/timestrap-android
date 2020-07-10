@@ -6,7 +6,6 @@ import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import dev.iwilltry42.timestrap.content.entries.EntryContent
 import dev.iwilltry42.timestrap.content.entries.formatDate
@@ -20,7 +19,7 @@ class EntriesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_task_detail)
+        setContentView(R.layout.activity_entries)
 
         findViewById<TextView>(R.id.text_task_title).text = "Entries"
 

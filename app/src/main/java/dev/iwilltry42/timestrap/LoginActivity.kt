@@ -7,6 +7,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Base64
 import android.util.Log
+import android.view.MenuItem
 import android.widget.*
 import com.android.volley.Request
 import kotlinx.android.synthetic.main.activity_login.*
@@ -67,6 +68,19 @@ class LoginActivity : AppCompatActivity() {
         findViewById<EditText>(R.id.username).addTextChangedListener(fieldsFilledWatcher)
         findViewById<EditText>(R.id.password).addTextChangedListener(fieldsFilledWatcher)
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+                true
+            }
+        }
     }
 
     // Use basic auth against the API to retrieve an API-Token -> on callback, proceed with setting the user details
