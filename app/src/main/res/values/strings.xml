@@ -29,10 +29,8 @@
     <string name="task_item_chip_rate">%s$/h</string>
 
     <!-- Entry List -->
-    <string name="entry_item_from_to">
-        From: %s\n
-        To: %s
-    </string>
+    <string name="entry_item_datetime_start">&lt;b>From:&lt;/b> %s</string>
+    <string name="entry_item_datetime_end">&lt;b>To:&lt;/b> %s</string>
 
     <!-- API Response Field -->
     <string name="response_field">Response:\n %s</string>

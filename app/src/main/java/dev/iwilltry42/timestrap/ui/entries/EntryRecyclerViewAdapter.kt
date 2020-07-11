@@ -4,9 +4,13 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewStub
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.view.children
 import dev.iwilltry42.timestrap.R
 import dev.iwilltry42.timestrap.content.entries.EntryContent
+import dev.iwilltry42.timestrap.fromHtml
 import java.text.SimpleDateFormat
 
 /**
@@ -19,6 +23,9 @@ class EntryRecyclerViewAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.fragment_item_list_item, parent, false)
+        val stub = view.findViewById<ViewStub>(R.id.item_details_stub)
+        stub.layoutResource = R.layout.item_details_entry
+        stub.inflate()
         return ViewHolder(view)
     }
 
@@ -31,7 +38,7 @@ class EntryRecyclerViewAdapter(
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val itemName: TextView = view.findViewById(R.id.item_name)
-        private val itemDetail: TextView = view.findViewById(R.id.item_detail)
+        private val itemDetails: LinearLayout = view.findViewById(R.id.item_details)
 
         override fun toString(): String {
             return super.toString() + " '" + itemName.text + "'"
@@ -41,11 +48,22 @@ class EntryRecyclerViewAdapter(
         fun bind(entry: EntryContent.Entry) {
             itemName.text = entry.id.toString()
 
+
+
             // display start and endtime if present
-            if (entry.datetimeStart != null && entry.datetimeEnd != null) {
+            if (
+                entry.datetimeStart != null
+                && entry.datetimeEnd != null
+            ) {
+                itemDetails.removeAllViews()
                 val datefmt = SimpleDateFormat("dd.MM.yyyy HH:mm:ss")
-                itemDetail.text = itemView.context.getString(R.string.entry_item_from_to, datefmt.format(entry.datetimeStart), datefmt.format(entry.datetimeEnd))
-                itemDetail.visibility = View.VISIBLE
+                val txtStart = TextView(itemView.context)
+                val txtEnd = TextView(itemView.context)
+                itemDetails.addView(txtStart)
+                itemDetails.addView(txtEnd)
+                txtStart.text = fromHtml(itemView.context.getString(R.string.entry_item_datetime_start, datefmt.format(entry.datetimeStart)))
+                txtEnd.text = fromHtml(itemView.context.getString(R.string.entry_item_datetime_end, datefmt.format(entry.datetimeEnd)))
+                itemDetails.visibility = View.VISIBLE
             }
 
         }

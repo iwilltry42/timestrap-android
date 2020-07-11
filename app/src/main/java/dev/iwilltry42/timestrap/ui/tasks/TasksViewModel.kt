@@ -3,6 +3,8 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewStub
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -21,6 +23,9 @@ class TaskRecyclerViewAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.fragment_item_list_item, parent, false)
+        val stub = view.findViewById<ViewStub>(R.id.item_details_stub)
+        stub.layoutResource = R.layout.item_details_entry
+        stub.inflate()
         return ViewHolder(view)
     }
 
@@ -33,7 +38,7 @@ class TaskRecyclerViewAdapter(
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val itemName: TextView = view.findViewById(R.id.item_name)
-        private val itemDetail: TextView = view.findViewById(R.id.item_detail)
+        private val itemDetails: LinearLayout = view.findViewById(R.id.item_details)
 
         override fun toString(): String {
             return super.toString() + " '" + itemName.text + "'"
