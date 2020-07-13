@@ -35,4 +35,7 @@
     <!-- API Response Field -->
     <string name="response_field">Response:\n %s</string>
 
+    <!-- Bottom Navigation + App Bar -->
+    <string name="fab_description">Entries</string>
+
 </resources>
