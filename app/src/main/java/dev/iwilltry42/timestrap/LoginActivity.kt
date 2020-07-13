@@ -7,6 +7,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Base64
 import android.util.Log
+import android.view.Gravity
 import android.view.MenuItem
 import android.widget.*
 import com.android.volley.Request
@@ -97,7 +98,9 @@ class LoginActivity : AppCompatActivity() {
         if (success) {
             Log.e("API", "Fetched token ${response?.get("token")?.toString()}")
             apiToken = response?.get("token")?.toString()
-            Toast.makeText(this, "Fetched API Token '${this.apiToken}'", Toast.LENGTH_SHORT).show()
+            val toast = Toast.makeText(this, "Fetched API Token '${this.apiToken}'", Toast.LENGTH_SHORT)
+            toast.setGravity(Gravity.TOP, 0, 16)
+            toast.show()
 
             // Login succeeded: store details in AppPreferences
             AppPreferences.token = apiToken!!
@@ -105,7 +108,9 @@ class LoginActivity : AppCompatActivity() {
             AppPreferences.username = this.username!!
             AppPreferences.isLoggedIn = true
         } else {
-            Toast.makeText(this, "Failed to fetch API Token: Please verify your Account Details", Toast.LENGTH_SHORT).show()
+            val toast = Toast.makeText(this, "Failed to fetch API Token: Please verify your Account Details", Toast.LENGTH_SHORT)
+            toast.setGravity(Gravity.TOP, 0, 16)
+            toast.show()
             Log.e("API", "Failed to fetch API Token")
             AppPreferences.isLoggedIn = false
         }

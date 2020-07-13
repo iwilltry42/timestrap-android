@@ -2,6 +2,7 @@ package dev.iwilltry42.timestrap
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
@@ -70,7 +71,9 @@ class EntriesActivity : AppCompatActivity() {
                 EntryContent.ENTRIES.sortBy {it.id}
                 findViewById<RecyclerView>(R.id.list).adapter?.notifyDataSetChanged()
             } else {
-                Toast.makeText(this, "Request Failed!", Toast.LENGTH_SHORT).show()
+                val toast = Toast.makeText(this, "Request Failed!", Toast.LENGTH_SHORT)
+                toast.setGravity(Gravity.TOP, 0, 16)
+                toast.show()
             }
         }
     }

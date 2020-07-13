@@ -3,6 +3,7 @@ package dev.iwilltry42.timestrap.ui.projects
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -59,14 +60,18 @@ class ProjectsFragment : Fragment(), OnItemClickListener {
                     )
                 }
                 Log.d("Tasks", "$ProjectContent.PROJECTS")
-                Toast.makeText(
+                val toast = Toast.makeText(
                     this.requireContext(),
                     "Fetched ${ProjectContent.PROJECTS.size} projects",
                     Toast.LENGTH_SHORT
-                ).show()
+                )
+                toast.setGravity(Gravity.TOP, 0, 16)
+                toast.show()
                 view?.findViewById<RecyclerView>(R.id.list)?.adapter?.notifyDataSetChanged()
             } else {
-                Toast.makeText(this.requireContext(), "Request Failed!", Toast.LENGTH_SHORT).show()
+                val toast= Toast.makeText(this.requireContext(), "Request Failed!", Toast.LENGTH_SHORT)
+                toast.setGravity(Gravity.TOP, 0, 16)
+                toast.show()
             }
         }
     }

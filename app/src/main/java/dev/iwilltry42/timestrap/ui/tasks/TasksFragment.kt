@@ -3,6 +3,7 @@ package dev.iwilltry42.timestrap.ui.tasks
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -47,10 +48,14 @@ class TasksFragment : Fragment(), OnItemClickListener {
                             task["url"].toString()))
                 }
                 Log.d("Tasks", "${TaskContent.TASKS}")
-                Toast.makeText(this.requireContext(), "Fetched ${TaskContent.TASKS.size} tasks", Toast.LENGTH_SHORT).show()
+                val toast = Toast.makeText(this.requireContext(), "Fetched ${TaskContent.TASKS.size} tasks", Toast.LENGTH_SHORT)
+                toast.setGravity(Gravity.TOP, 0, 16)
+                toast.show()
                 view?.findViewById<RecyclerView>(R.id.list)?.adapter?.notifyDataSetChanged()
             } else {
-                Toast.makeText(this.requireContext(), "Request Failed!", Toast.LENGTH_SHORT).show()
+                val toast = Toast.makeText(this.requireContext(), "Request Failed!", Toast.LENGTH_SHORT)
+                toast.setGravity(Gravity.TOP, 0, 16)
+                toast.show()
             }
         }
     }

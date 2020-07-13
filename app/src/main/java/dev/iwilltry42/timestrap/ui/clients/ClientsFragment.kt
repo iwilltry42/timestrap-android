@@ -2,6 +2,7 @@ package dev.iwilltry42.timestrap.ui.clients
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -56,14 +57,18 @@ class ClientsFragment : Fragment(), OnItemClickListener {
                     )
                 }
                 Log.d("Clients", "$ClientContent.CLIENTS")
-                Toast.makeText(
+                val toast = Toast.makeText(
                     this.requireContext(),
                     "Fetched ${ClientContent.CLIENTS.size} clients",
                     Toast.LENGTH_SHORT
-                ).show()
+                )
+                toast.setGravity(Gravity.TOP, 0, 16)
+                toast.show()
                 view?.findViewById<RecyclerView>(R.id.list)?.adapter?.notifyDataSetChanged()
             } else {
-                Toast.makeText(this.requireContext(), "Request Failed!", Toast.LENGTH_SHORT).show()
+                val toast = Toast.makeText(this.requireContext(), "Request Failed!", Toast.LENGTH_SHORT)
+                toast.setGravity(Gravity.TOP, 0, 16)
+                toast.show()
             }
         }
     }
@@ -71,7 +76,9 @@ class ClientsFragment : Fragment(), OnItemClickListener {
     // custom on click listener implementing TaskRecyclerViewAdapter.OnItemClickListener
     override fun onItemClicked(client: ClientContent.Client) {
         Log.i("Clicked Task", client.name)
-        Toast.makeText(this.context, "Checkout ${client.url}", Toast.LENGTH_SHORT).show()
+        val toast = Toast.makeText(this.context, "Checkout ${client.url}", Toast.LENGTH_SHORT)
+        toast.setGravity(Gravity.TOP, 0, 16)
+        toast.show()
     }
 
     override fun onCreateView(

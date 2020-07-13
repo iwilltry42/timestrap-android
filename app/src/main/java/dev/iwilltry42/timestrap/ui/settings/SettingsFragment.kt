@@ -3,6 +3,7 @@ package dev.iwilltry42.timestrap.ui.settings
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -50,7 +51,9 @@ class SettingsFragment : Fragment(), OnItemClickListener {
     // custom on click listener implementing TaskRecyclerViewAdapter.OnItemClickListener
     override fun onItemClicked(setting: SettingsContent.Setting) {
         Log.i("Clicked Setting", setting.name)
-        Toast.makeText(this.context, "Clicked Setting ${setting.name}", Toast.LENGTH_SHORT).show()
+        val toast = Toast.makeText(this.context, "Clicked Setting ${setting.name}", Toast.LENGTH_SHORT)
+        toast.setGravity(Gravity.TOP, 0, 16)
+        toast.show()
         val intent = Intent(this.context, setting.act)
         startActivity(intent)
     }
