@@ -70,6 +70,9 @@ class EntriesActivity : AppCompatActivity() {
                 Log.d("Entries", "${EntryContent.ENTRIES}")
                 EntryContent.ENTRIES.sortBy {it.id}
                 findViewById<RecyclerView>(R.id.list).adapter?.notifyDataSetChanged()
+                val toast = Toast.makeText(this, "Fetched ${response["count"]} entries", Toast.LENGTH_SHORT)
+                toast.setGravity(Gravity.TOP, 0, 16)
+                toast.show()
             } else {
                 val toast = Toast.makeText(this, "Request Failed!", Toast.LENGTH_SHORT)
                 toast.setGravity(Gravity.TOP, 0, 16)
