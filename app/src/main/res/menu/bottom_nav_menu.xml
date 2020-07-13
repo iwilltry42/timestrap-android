@@ -12,6 +12,12 @@
         android:title="@string/title_projects" />
 
     <item
+        android:id="@+id/navigation_placeholder"
+        android:title=""
+        android:enabled="false"
+        />
+
+    <item
         android:id="@+id/navigation_clients"
         android:icon="@drawable/ic_baseline_people_alt_24"
         android:title="@string/title_clients" />
