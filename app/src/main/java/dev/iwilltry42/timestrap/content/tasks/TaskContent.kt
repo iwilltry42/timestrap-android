@@ -1,5 +1,6 @@
 package dev.iwilltry42.timestrap.content.tasks
 
+import com.google.gson.reflect.TypeToken
 import java.util.ArrayList
 
 object TaskContent {
@@ -8,6 +9,7 @@ object TaskContent {
      * List of tasks
      */
     val TASKS: MutableList<Task> = ArrayList()
+    val listTypeToken = object : TypeToken<MutableList<Task>>() {}.type
 
 
     /**

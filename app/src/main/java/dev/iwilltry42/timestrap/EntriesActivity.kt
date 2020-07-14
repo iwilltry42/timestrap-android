@@ -8,6 +8,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
+import dev.iwilltry42.timestrap.content.clients.ClientContent
 import dev.iwilltry42.timestrap.content.entries.EntryContent
 import dev.iwilltry42.timestrap.content.entries.formatDate
 import org.json.JSONArray
@@ -49,24 +51,8 @@ class EntriesActivity : AppCompatActivity() {
             if (success && response != null) {
                 val resultList: JSONArray = response.getJSONArray("results")
                 EntryContent.ENTRIES.clear()
-                for (i in 0 until  resultList.length()) {
-                    val entry = resultList.getJSONObject(i)
-                    EntryContent.ENTRIES.add(
-                        i,
-                        EntryContent.Entry(
-                            entry["id"].toString().toInt(),
-                            entry["url"].toString(),
-                            entry["project"].toString(),
-                            entry["task"].toString(),
-                            entry["user"].toString(),
-                            SimpleDateFormat("yyyy-MM-dd").parse(entry["date"].toString()),
-                            entry["duration"].toString(),
-                            formatDate(entry["datetime_start"].toString()),
-                            formatDate(entry["datetime_end"].toString()),
-                            entry["note"].toString()
-                        )
-                    )
-                }
+                val gson = Gson()
+                EntryContent.ENTRIES.addAll(gson.fromJson<MutableList<EntryContent.Entry>>(response.getJSONArray("results").toString(), EntryContent.listTypeToken))
                 Log.d("Entries", "${EntryContent.ENTRIES}")
                 EntryContent.ENTRIES.sortBy {it.id}
                 findViewById<RecyclerView>(R.id.list).adapter?.notifyDataSetChanged()

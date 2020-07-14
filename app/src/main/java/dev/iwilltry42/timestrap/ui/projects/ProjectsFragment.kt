@@ -12,6 +12,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import dev.iwilltry42.timestrap.*
 import dev.iwilltry42.timestrap.content.projects.ProjectContent
 
@@ -42,24 +44,8 @@ class ProjectsFragment : Fragment(), OnItemClickListener {
         ) { success, response ->
             if (success && response != null) {
                 ProjectContent.PROJECTS.clear()
-                for (i in 0 until response.length()) {
-                    val project = response.getJSONObject(i)
-                    ProjectContent.PROJECTS.add(
-                        i,
-                        ProjectContent.Project(
-                            project["id"].toString().toInt(),
-                            project["url"].toString(),
-                            project["client"].toString(),
-                            project["name"].toString(),
-                            project["archive"].toString().toBoolean(),
-                            project["estimate"].toString(),
-                            project["total_entries"].toString().toInt(),
-                            project["total_duration"].toString(),
-                            project["percent_done"].toString()
-                        )
-                    )
-                }
-                Log.d("Tasks", "$ProjectContent.PROJECTS")
+                val gson = Gson()
+                ProjectContent.PROJECTS.addAll(gson.fromJson<MutableList<ProjectContent.Project>>(response.toString(), ProjectContent.listTypeToken))
                 val toast = Toast.makeText(
                     this.requireContext(),
                     "Fetched ${ProjectContent.PROJECTS.size} projects",

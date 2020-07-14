@@ -11,8 +11,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.google.gson.Gson
 import dev.iwilltry42.timestrap.*
 import dev.iwilltry42.timestrap.content.clients.ClientContent
+import dev.iwilltry42.timestrap.content.projects.ProjectContent
 
 /**
  * A fragment representing a list of Items.
@@ -41,21 +43,8 @@ class ClientsFragment : Fragment(), OnItemClickListener {
         ) { success, response ->
             if (success && response != null) {
                 ClientContent.CLIENTS.clear()
-                for (i in 0 until response.length()) {
-                    val client = response.getJSONObject(i)
-                    ClientContent.CLIENTS.add(
-                        i,
-                        ClientContent.Client(
-                            client["id"].toString().toInt(),
-                            client["url"].toString(),
-                            client["name"].toString(),
-                            client["payment_id"].toString(),
-                            client["archive"].toString().toBoolean(),
-                            client["total_projects"].toString().toInt(),
-                            client["total_duration"].toString()
-                        )
-                    )
-                }
+                val gson = Gson()
+                ClientContent.CLIENTS.addAll(gson.fromJson<MutableList<ClientContent.Client>>(response.toString(), ClientContent.listTypeToken))
                 Log.d("Clients", "$ClientContent.CLIENTS")
                 val toast = Toast.makeText(
                     this.requireContext(),

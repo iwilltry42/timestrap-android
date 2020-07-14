@@ -1,6 +1,8 @@
 package dev.iwilltry42.timestrap.content.entries
 
 import android.util.Log
+import com.google.gson.annotations.SerializedName
+import com.google.gson.reflect.TypeToken
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
@@ -12,6 +14,8 @@ object EntryContent {
      * List of entries
      */
     val ENTRIES: MutableList<Entry> = ArrayList()
+    val listTypeToken = object : TypeToken<MutableList<Entry>>() {}.type
+
 
 
     /**
@@ -25,7 +29,9 @@ object EntryContent {
         val user: String,
         val date: Date?,
         val duration: String,
+        @SerializedName("datetime_start")
         val datetimeStart: Date?,
+        @SerializedName("datetime_end")
         val datetimeEnd: Date?,
         val note: String?
     ) {

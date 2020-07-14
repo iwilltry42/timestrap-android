@@ -1,5 +1,6 @@
 package dev.iwilltry42.timestrap.content.clients
 
+import com.google.gson.reflect.TypeToken
 import java.util.ArrayList
 
 object ClientContent {
@@ -8,6 +9,7 @@ object ClientContent {
      * List of tasks
      */
     val CLIENTS: MutableList<Client> = ArrayList()
+    val listTypeToken = object : TypeToken<MutableList<Client>>() {}.type
 
 
     /**

@@ -12,7 +12,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.google.gson.Gson
 import dev.iwilltry42.timestrap.*
+import dev.iwilltry42.timestrap.content.entries.EntryContent
 import dev.iwilltry42.timestrap.content.tasks.TaskContent
 import org.json.JSONObject
 
@@ -38,15 +40,8 @@ class TasksFragment : Fragment(), OnItemClickListener {
         requestAPIArrayWithTokenAuth(this.requireContext(), AppPreferences.address, "/api/tasks/", AppPreferences.token) { success, response ->
             if (success && response != null) {
                 TaskContent.TASKS.clear()
-                for (i in 0 until  response.length()) {
-                    val task = response.getJSONObject(i)
-                    TaskContent.TASKS.add(i,
-                        TaskContent.Task(
-                            task["id"].toString().toInt(),
-                            task["name"].toString(),
-                            if (task["hourly_rate"] == JSONObject.NULL) null else task["hourly_rate"].toString(),
-                            task["url"].toString()))
-                }
+                val gson = Gson()
+                TaskContent.TASKS.addAll(gson.fromJson<MutableList<TaskContent.Task>>(response.toString(),TaskContent.listTypeToken))
                 Log.d("Tasks", "${TaskContent.TASKS}")
                 val toast = Toast.makeText(this.requireContext(), "Fetched ${TaskContent.TASKS.size} tasks", Toast.LENGTH_SHORT)
                 toast.setGravity(Gravity.TOP, 0, 16)
