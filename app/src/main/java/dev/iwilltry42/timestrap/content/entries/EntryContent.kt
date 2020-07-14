@@ -25,10 +25,10 @@ object EntryContent {
         val id: Int,
         val url: String,
         val project: String,
-        val task: String,
+        val task: String?,
         val user: String,
         val date: Date?,
-        val duration: String,
+        val duration: Double,
         @SerializedName("datetime_start")
         val datetimeStart: Date?,
         @SerializedName("datetime_end")
