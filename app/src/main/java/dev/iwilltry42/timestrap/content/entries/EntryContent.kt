@@ -1,6 +1,9 @@
 package dev.iwilltry42.timestrap.content.entries
 
 import android.util.Log
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import com.google.gson.reflect.TypeToken
 import java.lang.Exception
@@ -21,8 +24,9 @@ object EntryContent {
     /**
      * Entry
      */
+    @Entity(tableName = "entries")
     data class Entry(
-        val id: Int,
+        @PrimaryKey val id: Int,
         val url: String,
         val project: String,
         val task: String?,
@@ -30,9 +34,9 @@ object EntryContent {
         val date: Date?,
         val duration: Double,
         @SerializedName("datetime_start")
-        val datetimeStart: Date?,
+        @ColumnInfo(name = "datetime_start") val datetimeStart: Date?,
         @SerializedName("datetime_end")
-        val datetimeEnd: Date?,
+        @ColumnInfo(name = "datetime_end") val datetimeEnd: Date?,
         val note: String?
     ) {
         override fun toString(): String = id.toString()

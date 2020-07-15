@@ -1,5 +1,8 @@
 package dev.iwilltry42.timestrap.content.clients
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.reflect.TypeToken
 import java.util.ArrayList
 
@@ -19,14 +22,15 @@ object ClientContent {
      * Rate (Hourly)
      * URL
      */
+    @Entity(tableName = "clients")
     data class Client(
-        val id: Int,
+        @PrimaryKey val id: Int,
         val url: String,
         val name: String,
-        val paymentID: String?,
+        @ColumnInfo(name = "payment_id") val paymentID: String?,
         val archive: Boolean,
-        val totalProjects: Int,
-        val totalDuration: String
+        @ColumnInfo(name = "total_projects") val totalProjects: Int,
+        @ColumnInfo(name = "total_duration") val totalDuration: String
     ) {
         override fun toString(): String = name
     }

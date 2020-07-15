@@ -1,5 +1,8 @@
 package dev.iwilltry42.timestrap.content.projects
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import com.google.gson.reflect.TypeToken
 import java.util.ArrayList
@@ -22,19 +25,20 @@ object ProjectContent {
      * Rate (Hourly)
      * URL
      */
+    @Entity(tableName = "projects")
     data class Project(
-        val id: Int,
+        @PrimaryKey val id: Int,
         val url: String,
         val client: String,
         val name: String,
         val archive: Boolean,
         val estimate: String?,
         @SerializedName("total_entries")
-        val totalEntries: Int,
+        @ColumnInfo(name = "total_entries") val totalEntries: Int,
         @SerializedName("total_duration")
-        val totalDuration: String,
+        @ColumnInfo(name = "total_duration") val totalDuration: String,
         @SerializedName("percent_done")
-        val percentDone: String?
+        @ColumnInfo(name = "percent_done") val percentDone: String?
     ) {
         override fun toString(): String = name
     }

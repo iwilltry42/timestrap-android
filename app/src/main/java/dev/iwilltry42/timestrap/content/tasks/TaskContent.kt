@@ -1,5 +1,7 @@
 package dev.iwilltry42.timestrap.content.tasks
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.reflect.TypeToken
 import java.util.ArrayList
 
@@ -19,8 +21,9 @@ object TaskContent {
      * Rate (Hourly)
      * URL
      */
+    @Entity(tableName = "tasks")
     data class Task(
-        val id: Int,
+        @PrimaryKey val id: Int,
         val name: String,
         val rate: String?,
         val url: String) {
