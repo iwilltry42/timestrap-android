@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import android.view.ViewStub
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.view.children
 import dev.iwilltry42.timestrap.R
-import dev.iwilltry42.timestrap.content.entries.EntryContent
+import dev.iwilltry42.timestrap.content.entries.Entry
 import dev.iwilltry42.timestrap.fromHtml
 import java.text.SimpleDateFormat
 
@@ -17,7 +16,7 @@ import java.text.SimpleDateFormat
  * [RecyclerView.Adapter] that can display an [Entry].
  */
 class EntryRecyclerViewAdapter(
-    private val values: List<EntryContent.Entry>
+    private val values: List<Entry>
 ) : RecyclerView.Adapter<EntryRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -45,7 +44,7 @@ class EntryRecyclerViewAdapter(
         }
 
         // bind item to the view holder
-        fun bind(entry: EntryContent.Entry) {
+        fun bind(entry: Entry) {
             itemName.text = entry.id.toString()
 
 

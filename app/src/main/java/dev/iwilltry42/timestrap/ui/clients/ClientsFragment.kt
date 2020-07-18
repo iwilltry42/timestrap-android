@@ -13,8 +13,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.google.gson.Gson
 import dev.iwilltry42.timestrap.*
-import dev.iwilltry42.timestrap.content.clients.ClientContent
-import dev.iwilltry42.timestrap.content.projects.ProjectContent
+import dev.iwilltry42.timestrap.content.clients.CLIENTS
+import dev.iwilltry42.timestrap.content.clients.Client
+import dev.iwilltry42.timestrap.content.clients.clientListTypeToken
 
 /**
  * A fragment representing a list of Items.
@@ -42,13 +43,13 @@ class ClientsFragment : Fragment(), OnItemClickListener {
             AppPreferences.token
         ) { success, response ->
             if (success && response != null) {
-                ClientContent.CLIENTS.clear()
+                CLIENTS.clear()
                 val gson = Gson()
-                ClientContent.CLIENTS.addAll(gson.fromJson<MutableList<ClientContent.Client>>(response.toString(), ClientContent.listTypeToken))
-                Log.d("Clients", "$ClientContent.CLIENTS")
+                CLIENTS.addAll(gson.fromJson<MutableList<Client>>(response.toString(), clientListTypeToken))
+                Log.d("Clients", "$CLIENTS")
                 val toast = Toast.makeText(
                     this.requireContext(),
-                    "Fetched ${ClientContent.CLIENTS.size} clients",
+                    "Fetched ${CLIENTS.size} clients",
                     Toast.LENGTH_SHORT
                 )
                 toast.setGravity(Gravity.TOP, 0, 16)
@@ -63,7 +64,7 @@ class ClientsFragment : Fragment(), OnItemClickListener {
     }
 
     // custom on click listener implementing TaskRecyclerViewAdapter.OnItemClickListener
-    override fun onItemClicked(client: ClientContent.Client) {
+    override fun onItemClicked(client: Client) {
         Log.i("Clicked Task", client.name)
         val toast = Toast.makeText(this.context, "Checkout ${client.url}", Toast.LENGTH_SHORT)
         toast.setGravity(Gravity.TOP, 0, 16)
@@ -78,7 +79,7 @@ class ClientsFragment : Fragment(), OnItemClickListener {
 
         // Set the adapter
         if (view is RecyclerView) {
-            val useAdapter = ClientRecyclerViewAdapter(ClientContent.CLIENTS, this)
+            val useAdapter = ClientRecyclerViewAdapter(CLIENTS, this)
             with(view) {
                 layoutManager = when {
                     columnCount <= 1 -> LinearLayoutManager(context)

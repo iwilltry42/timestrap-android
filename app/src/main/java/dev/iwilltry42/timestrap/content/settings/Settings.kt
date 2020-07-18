@@ -3,7 +3,7 @@ package dev.iwilltry42.timestrap.content.settings
 import android.app.Activity
 import java.util.ArrayList
 
-object SettingsContent {
+object Settings {
 
     /**
      * List of tasks

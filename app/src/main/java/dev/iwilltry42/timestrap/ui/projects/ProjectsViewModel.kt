@@ -5,14 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.android.volley.Request
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import dev.iwilltry42.timestrap.AppPreferences
 import dev.iwilltry42.timestrap.R
+import dev.iwilltry42.timestrap.content.projects.Project
 
-import dev.iwilltry42.timestrap.content.projects.ProjectContent.Project
-import dev.iwilltry42.timestrap.requestAPIObject
 import dev.iwilltry42.timestrap.requestAPIObjectWithTokenAuth
 
 /**

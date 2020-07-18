@@ -9,11 +9,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
-import dev.iwilltry42.timestrap.content.clients.ClientContent
-import dev.iwilltry42.timestrap.content.entries.EntryContent
-import dev.iwilltry42.timestrap.content.entries.formatDate
+import dev.iwilltry42.timestrap.content.entries.ENTRIES
+import dev.iwilltry42.timestrap.content.entries.Entry
+import dev.iwilltry42.timestrap.content.entries.entryListTypeToken
 import org.json.JSONArray
-import java.text.SimpleDateFormat
 
 const val EXTRA_TASK_ID = "dev.iwilltry42.timestrap.TASK_ID"
 const val EXTRA_PROJECT_ID = "dev.iwilltry42.timestrap.PROJECT_ID"
@@ -50,11 +49,11 @@ class EntriesActivity : AppCompatActivity() {
         requestAPIObjectWithTokenAuth(this, AppPreferences.address, "/api/entries/?${filter}", AppPreferences.token) {success, response ->
             if (success && response != null) {
                 val resultList: JSONArray = response.getJSONArray("results")
-                EntryContent.ENTRIES.clear()
+                ENTRIES.clear()
                 val gson = Gson()
-                EntryContent.ENTRIES.addAll(gson.fromJson<MutableList<EntryContent.Entry>>(response.getJSONArray("results").toString(), EntryContent.listTypeToken))
-                Log.d("Entries", "${EntryContent.ENTRIES}")
-                EntryContent.ENTRIES.sortBy {it.id}
+                ENTRIES.addAll(gson.fromJson<MutableList<Entry>>(response.getJSONArray("results").toString(), entryListTypeToken))
+                Log.d("Entries", "${ENTRIES}")
+                ENTRIES.sortBy {it.id}
                 findViewById<RecyclerView>(R.id.list).adapter?.notifyDataSetChanged()
                 val toast = Toast.makeText(this, "Fetched ${response["count"]} entries", Toast.LENGTH_SHORT)
                 toast.setGravity(Gravity.TOP, 0, 16)

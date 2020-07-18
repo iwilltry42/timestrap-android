@@ -2,7 +2,6 @@ package dev.iwilltry42.timestrap.ui.projects
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -13,9 +12,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import dev.iwilltry42.timestrap.*
-import dev.iwilltry42.timestrap.content.projects.ProjectContent
+import dev.iwilltry42.timestrap.content.projects.PROJECTS
+import dev.iwilltry42.timestrap.content.projects.Project
+import dev.iwilltry42.timestrap.content.projects.projectListTypeToken
 
 /**
  * A fragment representing a list of Items.
@@ -43,12 +43,12 @@ class ProjectsFragment : Fragment(), OnItemClickListener {
             AppPreferences.token
         ) { success, response ->
             if (success && response != null) {
-                ProjectContent.PROJECTS.clear()
+                PROJECTS.clear()
                 val gson = Gson()
-                ProjectContent.PROJECTS.addAll(gson.fromJson<MutableList<ProjectContent.Project>>(response.toString(), ProjectContent.listTypeToken))
+                PROJECTS.addAll(gson.fromJson<MutableList<Project>>(response.toString(), projectListTypeToken))
                 val toast = Toast.makeText(
                     this.requireContext(),
-                    "Fetched ${ProjectContent.PROJECTS.size} projects",
+                    "Fetched ${PROJECTS.size} projects",
                     Toast.LENGTH_SHORT
                 )
                 toast.setGravity(Gravity.TOP, 0, 16)
@@ -63,7 +63,7 @@ class ProjectsFragment : Fragment(), OnItemClickListener {
     }
 
     // custom on click listener implementing TaskRecyclerViewAdapter.OnItemClickListener
-    override fun onItemClicked(project: ProjectContent.Project) {
+    override fun onItemClicked(project: Project) {
         val intent = Intent(activity, EntriesActivity::class.java).apply {
             putExtra(EXTRA_PROJECT_ID, project.id.toString())
         }
@@ -78,7 +78,7 @@ class ProjectsFragment : Fragment(), OnItemClickListener {
 
         // Set the adapter
         if (view is RecyclerView) {
-            val useAdapter = ProjectRecyclerViewAdapter(ProjectContent.PROJECTS, this)
+            val useAdapter = ProjectRecyclerViewAdapter(PROJECTS, this)
             with(view) {
                 layoutManager = when {
                     columnCount <= 1 -> LinearLayoutManager(context)

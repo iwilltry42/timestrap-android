@@ -9,7 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import dev.iwilltry42.timestrap.R
-import dev.iwilltry42.timestrap.content.entries.EntryContent
+import dev.iwilltry42.timestrap.content.entries.ENTRIES
 
 /**
  * A fragment representing a list of Items.
@@ -34,10 +34,10 @@ class EntryFragment : Fragment() {
 
         // Set the adapter
         if (view is RecyclerView) {
-            EntryContent.ENTRIES.sortBy {it.id}
+            ENTRIES.sortBy {it.id}
             val useAdapter =
                 EntryRecyclerViewAdapter(
-                    EntryContent.ENTRIES
+                    ENTRIES
                 )
             with(view) {
                 layoutManager = when {

@@ -11,36 +11,35 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-object EntryContent {
-
-    /**
-     * List of entries
-     */
-    val ENTRIES: MutableList<Entry> = ArrayList()
-    val listTypeToken = object : TypeToken<MutableList<Entry>>() {}.type
 
 
+/**
+ * List of entries
+ */
+val ENTRIES: MutableList<Entry> = ArrayList()
+val entryListTypeToken = object : TypeToken<MutableList<Entry>>() {}.type
 
-    /**
-     * Entry
-     */
-    @Entity(tableName = "entries")
-    data class Entry(
-        @PrimaryKey val id: Int,
-        val url: String,
-        val project: String,
-        val task: String?,
-        val user: String,
-        val date: Date?,
-        val duration: Double,
-        @SerializedName("datetime_start")
-        @ColumnInfo(name = "datetime_start") val datetimeStart: Date?,
-        @SerializedName("datetime_end")
-        @ColumnInfo(name = "datetime_end") val datetimeEnd: Date?,
-        val note: String?
-    ) {
-        override fun toString(): String = id.toString()
-    }
+
+
+/**
+ * Entry
+ */
+@Entity(tableName = "entries")
+class Entry(
+    @PrimaryKey val id: Int,
+    val url: String,
+    val project: String,
+    val task: String?,
+    val user: String,
+    val date: Date?,
+    val duration: Double,
+    @SerializedName("datetime_start")
+    @ColumnInfo(name = "datetime_start") val datetimeStart: Date?,
+    @SerializedName("datetime_end")
+    @ColumnInfo(name = "datetime_end") val datetimeEnd: Date?,
+    val note: String?
+) {
+    override fun toString(): String = id.toString()
 }
 
 fun formatDate(d: String): Date?{

@@ -13,7 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import dev.iwilltry42.timestrap.*
-import dev.iwilltry42.timestrap.content.settings.SettingsContent
+import dev.iwilltry42.timestrap.content.settings.Settings
 
 /**
  * A fragment representing a list of Items.
@@ -29,17 +29,17 @@ class SettingsFragment : Fragment(), OnItemClickListener {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
         }
 
-        SettingsContent.SETTINGS.clear()
+        Settings.SETTINGS.clear()
 
-        SettingsContent.SETTINGS.add(
-            0, SettingsContent.Setting(
+        Settings.SETTINGS.add(
+            0, Settings.Setting(
                 "Login",
                 LoginActivity::class.java
             )
         )
 
-        SettingsContent.SETTINGS.add(
-            1, SettingsContent.Setting(
+        Settings.SETTINGS.add(
+            1, Settings.Setting(
                 "Other Setting",
                 MainActivity::class.java
             )
@@ -49,7 +49,7 @@ class SettingsFragment : Fragment(), OnItemClickListener {
 
 
     // custom on click listener implementing TaskRecyclerViewAdapter.OnItemClickListener
-    override fun onItemClicked(setting: SettingsContent.Setting) {
+    override fun onItemClicked(setting: Settings.Setting) {
         Log.i("Clicked Setting", setting.name)
         val toast = Toast.makeText(this.context, "Clicked Setting ${setting.name}", Toast.LENGTH_SHORT)
         toast.setGravity(Gravity.TOP, 0, 16)
@@ -66,7 +66,7 @@ class SettingsFragment : Fragment(), OnItemClickListener {
 
         // Set the adapter
         if (view is RecyclerView) {
-            val useAdapter = SettingsRecyclerViewAdapter(SettingsContent.SETTINGS, this)
+            val useAdapter = SettingsRecyclerViewAdapter(Settings.SETTINGS, this)
             with(view) {
                 layoutManager = when {
                     columnCount <= 1 -> LinearLayoutManager(context)

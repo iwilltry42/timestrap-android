@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import dev.iwilltry42.timestrap.R
 
-import dev.iwilltry42.timestrap.content.settings.SettingsContent.Setting
+import dev.iwilltry42.timestrap.content.settings.Settings.Setting
 
 /**
  * [RecyclerView.Adapter] that can display a [Setting].
