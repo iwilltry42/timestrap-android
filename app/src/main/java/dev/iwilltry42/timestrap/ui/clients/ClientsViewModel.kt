@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import dev.iwilltry42.timestrap.R
-import dev.iwilltry42.timestrap.content.clients.Client
+import dev.iwilltry42.timestrap.entity.Client
 
 /**
  * [RecyclerView.Adapter] that can display a [Client].

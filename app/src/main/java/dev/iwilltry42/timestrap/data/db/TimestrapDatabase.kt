@@ -1,12 +1,12 @@
-package dev.iwilltry42.timestrap.db
+package dev.iwilltry42.timestrap.data.db
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import dev.iwilltry42.timestrap.content.tasks.Task
-import dev.iwilltry42.timestrap.content.tasks.TaskDao
+import dev.iwilltry42.timestrap.entity.Task
+import dev.iwilltry42.timestrap.entity.TaskDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -34,7 +34,12 @@ abstract class TimestrapRoomDB : RoomDatabase() {
             taskDao.deleteAll()
 
             // Add sample words.
-            val task = Task(0, "test-task","0.00", "https://m.timestrap.com/api/tasks/0/")
+            val task = Task(
+                0,
+                "test-task",
+                "0.00",
+                "https://m.timestrap.com/api/tasks/0/"
+            )
             taskDao.insert(task)
 
             // TODO: Add your own words!

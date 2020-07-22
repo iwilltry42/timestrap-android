@@ -13,7 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import dev.iwilltry42.timestrap.*
-import dev.iwilltry42.timestrap.content.settings.Settings
 
 /**
  * A fragment representing a list of Items.

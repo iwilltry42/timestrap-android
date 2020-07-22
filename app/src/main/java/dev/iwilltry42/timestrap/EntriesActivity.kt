@@ -9,9 +9,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
-import dev.iwilltry42.timestrap.content.entries.ENTRIES
-import dev.iwilltry42.timestrap.content.entries.Entry
-import dev.iwilltry42.timestrap.content.entries.entryListTypeToken
+import dev.iwilltry42.timestrap.entity.ENTRIES
+import dev.iwilltry42.timestrap.entity.Entry
+import dev.iwilltry42.timestrap.entity.entryListTypeToken
 import org.json.JSONArray
 
 const val EXTRA_TASK_ID = "dev.iwilltry42.timestrap.TASK_ID"
@@ -51,8 +51,10 @@ class EntriesActivity : AppCompatActivity() {
                 val resultList: JSONArray = response.getJSONArray("results")
                 ENTRIES.clear()
                 val gson = Gson()
-                ENTRIES.addAll(gson.fromJson<MutableList<Entry>>(response.getJSONArray("results").toString(), entryListTypeToken))
-                Log.d("Entries", "${ENTRIES}")
+                ENTRIES.addAll(gson.fromJson<MutableList<Entry>>(response.getJSONArray("results").toString(),
+                    entryListTypeToken
+                ))
+                Log.d("Entries", "$ENTRIES")
                 ENTRIES.sortBy {it.id}
                 findViewById<RecyclerView>(R.id.list).adapter?.notifyDataSetChanged()
                 val toast = Toast.makeText(this, "Fetched ${response["count"]} entries", Toast.LENGTH_SHORT)

@@ -9,7 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import dev.iwilltry42.timestrap.R
-import dev.iwilltry42.timestrap.content.entries.ENTRIES
+import dev.iwilltry42.timestrap.entity.ENTRIES
 
 /**
  * A fragment representing a list of Items.

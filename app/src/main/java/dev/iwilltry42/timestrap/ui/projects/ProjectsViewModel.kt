@@ -9,7 +9,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import dev.iwilltry42.timestrap.AppPreferences
 import dev.iwilltry42.timestrap.R
-import dev.iwilltry42.timestrap.content.projects.Project
+import dev.iwilltry42.timestrap.entity.Project
 
 import dev.iwilltry42.timestrap.requestAPIObjectWithTokenAuth
 

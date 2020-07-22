@@ -13,9 +13,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.google.gson.Gson
 import dev.iwilltry42.timestrap.*
-import dev.iwilltry42.timestrap.content.projects.PROJECTS
-import dev.iwilltry42.timestrap.content.projects.Project
-import dev.iwilltry42.timestrap.content.projects.projectListTypeToken
+import dev.iwilltry42.timestrap.entity.PROJECTS
+import dev.iwilltry42.timestrap.entity.Project
+import dev.iwilltry42.timestrap.entity.projectListTypeToken
 
 /**
  * A fragment representing a list of Items.
@@ -45,7 +45,9 @@ class ProjectsFragment : Fragment(), OnItemClickListener {
             if (success && response != null) {
                 PROJECTS.clear()
                 val gson = Gson()
-                PROJECTS.addAll(gson.fromJson<MutableList<Project>>(response.toString(), projectListTypeToken))
+                PROJECTS.addAll(gson.fromJson<MutableList<Project>>(response.toString(),
+                    projectListTypeToken
+                ))
                 val toast = Toast.makeText(
                     this.requireContext(),
                     "Fetched ${PROJECTS.size} projects",

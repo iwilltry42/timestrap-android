@@ -3,7 +3,6 @@ package dev.iwilltry42.timestrap.ui.tasks
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,14 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.google.gson.Gson
 import dev.iwilltry42.timestrap.*
-import dev.iwilltry42.timestrap.content.tasks.TASKS
-import dev.iwilltry42.timestrap.content.tasks.Task
-import dev.iwilltry42.timestrap.content.tasks.taskListTypeToken
+import dev.iwilltry42.timestrap.entity.TASKS
+import dev.iwilltry42.timestrap.entity.Task
 
 /**
  * A fragment representing a list of Items.
@@ -34,27 +30,11 @@ class TasksFragment : Fragment(), OnItemClickListener {
         arguments?.let {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
         }
+
+        taskViewModel.refreshTasks()
     }
 
-    // fetch and display the list of existing tasks from the Timestrap Server
-    private fun fetchTasks() {
-        requestAPIArrayWithTokenAuth(this.requireContext(), AppPreferences.address, "/api/tasks/", AppPreferences.token) { success, response ->
-            if (success && response != null) {
-                TASKS.clear()
-                val gson = Gson()
-                TASKS.addAll(gson.fromJson<MutableList<Task>>(response.toString(), taskListTypeToken))
-                Log.d("Tasks", "${TASKS}")
-                val toast = Toast.makeText(this.requireContext(), "Fetched ${TASKS.size} tasks", Toast.LENGTH_SHORT)
-                toast.setGravity(Gravity.TOP, 0, 16)
-                toast.show()
-                view?.findViewById<RecyclerView>(R.id.list)?.adapter?.setTasks()
-            } else {
-                val toast = Toast.makeText(this.requireContext(), "Request Failed!", Toast.LENGTH_SHORT)
-                toast.setGravity(Gravity.TOP, 0, 16)
-                toast.show()
-            }
-        }
-    }
+
 
     // custom on click listener implementing TaskRecyclerViewAdapter.OnItemClickListener
     override fun onItemClicked(task: Task) {

@@ -13,9 +13,9 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import dev.iwilltry42.timestrap.R
-import dev.iwilltry42.timestrap.content.tasks.Task
-import dev.iwilltry42.timestrap.db.TimestrapRepository
-import dev.iwilltry42.timestrap.db.TimestrapRoomDB
+import dev.iwilltry42.timestrap.entity.Task
+import dev.iwilltry42.timestrap.data.repository.TimestrapRepository
+import dev.iwilltry42.timestrap.data.db.TimestrapRoomDB
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -94,7 +94,8 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         val tasksDao = TimestrapRoomDB.getDatabase(application, viewModelScope).taskDao()
-        repository = TimestrapRepository(tasksDao)
+        repository =
+            TimestrapRepository(tasksDao)
         allTasks = repository.allTasks
     }
 
@@ -103,6 +104,10 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
      */
     fun insert(task: Task) = viewModelScope.launch(Dispatchers.IO) {
         repository.insert(task)
+    }
+
+    fun refreshTasks() = viewModelScope.launch(Dispatchers.IO) {
+        repository.refreshTasks()
     }
 
 }

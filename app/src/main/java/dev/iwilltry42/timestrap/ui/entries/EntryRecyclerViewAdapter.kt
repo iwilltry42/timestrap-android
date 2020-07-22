@@ -8,7 +8,7 @@ import android.view.ViewStub
 import android.widget.LinearLayout
 import android.widget.TextView
 import dev.iwilltry42.timestrap.R
-import dev.iwilltry42.timestrap.content.entries.Entry
+import dev.iwilltry42.timestrap.entity.Entry
 import dev.iwilltry42.timestrap.fromHtml
 import java.text.SimpleDateFormat
 

@@ -1,4 +1,4 @@
-package dev.iwilltry42.timestrap.content.tasks
+package dev.iwilltry42.timestrap.entity
 
 import androidx.lifecycle.LiveData
 import androidx.room.*

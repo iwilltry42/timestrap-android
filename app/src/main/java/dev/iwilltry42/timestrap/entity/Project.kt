@@ -1,4 +1,4 @@
-package dev.iwilltry42.timestrap.content.projects
+package dev.iwilltry42.timestrap.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

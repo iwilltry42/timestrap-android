@@ -1,6 +1,5 @@
-package dev.iwilltry42.timestrap.content.settings
+package dev.iwilltry42.timestrap.ui.settings
 
-import android.app.Activity
 import java.util.ArrayList
 
 object Settings {
